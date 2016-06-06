@@ -10,7 +10,7 @@
 
 #include <Wire.h>
 
-//const int ledPin = 13; // the pin that the LED is attached to
+const int ledPin = 13; // the pin that the LED is attached to
 
 const int cdc_on            = 0x21;
 const int cdc_off           = 0xA1;
@@ -22,10 +22,12 @@ const int cdc_down_hold     = 0x03;
 const int cdc_down_release  = 0x83;
 const int cdc_up_hold       = 0x04;
 const int cdc_up_release    = 0x84;
+int cdc_command;
 
 void setup() {
+  cdc_command = 0;
   // initialize the LED pin as an output:
-  //pinMode(ledPin, OUTPUT);
+  /**/pinMode(ledPin, OUTPUT);
 
   Wire.begin(64);               // join i2c bus with address #8
   //Wire.setClock(9600);        // set baud rite
@@ -38,6 +40,40 @@ void setup() {
 
 void loop() {
   delay(100);
+  if (cdc_command != 0) {
+    digitalWrite(ledPin, HIGH); // turn on the LED:
+    for (int j = 0; j < 20; j++) {
+      delay(100);
+
+      byte count = 0;
+      for (byte i = 8; i < 120; i++)
+      {
+        // set baud rite 9600
+        TWBR = 204;  // 1 kHz 
+        /* Select 4 as the prescaler value - see page 239 of the data sheet */
+        TWSR &= ~ bit (TWPS1);  //cbi change prescaler 4
+        TWSR |= bit (TWPS0);  //sbi change prescaler 4
+        
+        Wire.beginTransmission (i);
+        if (Wire.endTransmission () == 0)
+        {
+          Serial.print ("Found address: ");
+          Serial.print (i, DEC);
+          Serial.print (" (0x");
+          Serial.print (i, HEX);
+          Serial.println (")");
+          count++;
+          delay (1);  // maybe unneeded?
+        } // end of good response
+      } // end of for loop
+      Serial.println ("Done.");
+      Serial.print ("Found ");
+      Serial.print (count, DEC);
+      Serial.println (" device(s).");
+    }
+  }
+  cdc_command = 0;
+  digitalWrite(ledPin, LOW); // if it's an L (ASCII 76) turn off the LED:
 }
 
 // function that executes whenever data is received from master
@@ -47,12 +83,14 @@ void receiveEvent(int howMany) {
   //digitalWrite(ledPin, LOW); // if it's an L (ASCII 76) turn off the LED:
 
   while (1 < Wire.available()) {  // loop through all but the last
-    char c = Wire.read();         // receive byte as a character
-    //Serial.print(c);            // print the character
+    int y = Wire.read();         // receive byte as a character
+    Serial.print(y, HEX);            // print the character
+    Serial.print(" ");            // print the character
     int x = Wire.read();          // receive byte as an integer
     switch (x) {
       case cdc_on:
         Serial.println("ON");
+        cdc_command = cdc_on;
 // TODO: answer
 //        Wire.write(byte(0x34));
 //        Wire.write(byte(0xBE));
