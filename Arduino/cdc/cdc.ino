@@ -12,16 +12,16 @@
 
 const int ledPin = 13; // the pin that the LED is attached to
 
-const int cdc_on            = 0x21;
-const int cdc_off           = 0xA1;
-const int cdc_left_hold     = 0x01;
-const int cdc_left_release  = 0x81;
-const int cdc_right_hold    = 0x02;
-const int cdc_right_release = 0x82;
-const int cdc_down_hold     = 0x03;
-const int cdc_down_release  = 0x83;
-const int cdc_up_hold       = 0x04;
-const int cdc_up_release    = 0x84;
+const unsigned int cdc_on            = 0x21A1;
+const unsigned int cdc_off           = 0xA121;
+const unsigned int cdc_left_hold     = 0x0181;
+const unsigned int cdc_left_release  = 0x8101;
+const unsigned int cdc_right_hold    = 0x0282;
+const unsigned int cdc_right_release = 0x8202;
+const unsigned int cdc_down_hold     = 0x0383;
+const unsigned int cdc_down_release  = 0x8303;
+const unsigned int cdc_up_hold       = 0x0484;
+const unsigned int cdc_up_release    = 0x8404;
 int cdc_command;
 
 void setup() {
@@ -29,35 +29,31 @@ void setup() {
   // initialize the LED pin as an output:
   /**/pinMode(ledPin, OUTPUT);
 
-  Wire.begin(64);               // join i2c bus with address #8
+  Wire.begin(64);                 // join i2c bus with address #40
 
-  //Wire.setClock(960);        // set baud rite
   // set baud rite 960
-  /**/TWBR = 130;  // 1 kHz 
+  TWBR = 130;                     // ((16 MHz / 960 Hz) - 16) / 2 / 64
   //Serial.println(TWBR, HEX);
-  /* Select 4 as the prescaler value - see page 239 of the data sheet */
-  /**/TWSR |= bit (TWPS1);  //&= ~cbi change prescaler 64
-  /**/TWSR |= bit (TWPS0);  //|=sbi change prescaler 64
+  /* Select 64 as the prescaler value - see page 239 of the data sheet */
+  /**/TWSR |= bit (TWPS1);
+  /**/TWSR |= bit (TWPS0);
   //Serial.println(TWSR, HEX);
  
-  //digitalWrite(ledPin, HIGH); // turn on the LED:
-
-  // set up request handler  (in setup)
-  Wire.onRequest(requestEvent);  // interrupt handler for when data is wanted
+  Wire.onRequest(requestEvent);   // interrupt handler for when data is wanted
   
-  Wire.onReceive(receiveEvent); // register event
+  Wire.onReceive(receiveEvent);   // register event
 
-  Serial.begin(9600);           // start serial for output
+  Serial.begin(9600);             // start serial for output
 }
 
 void loop() {
   delay(100);
-  check();
+  //check();
 }
 
 void check() {
   if (cdc_command != 0) {
-    digitalWrite(ledPin, HIGH); // turn on the LED:
+    digitalWrite(ledPin, HIGH);   // turn on the LED:
     for (int j = 0; j < 5; j++) {
       delay(100);
 
@@ -73,73 +69,67 @@ void check() {
           Serial.print (i, HEX);
           Serial.println (")");
           count++;
-          delay (1);  // maybe unneeded?
+          //delay (1);            // maybe unneeded?
         } // end of good response
       } // end of for loop
-      Serial.println ("Done.");
-      Serial.print ("Found ");
-      Serial.print (count, DEC);
-      Serial.println (" device(s).");
+      //Serial.println ("Done.");
+      //Serial.print ("Found ");
+      //Serial.print (count, DEC);
+      //Serial.println (" device(s).");
     }
+    Serial.println ("Done.");
+    cdc_command = 0;
+    digitalWrite(ledPin, LOW);    // turn off the LED:
   }
-  cdc_command = 0;
-  digitalWrite(ledPin, LOW); // if it's an L (ASCII 76) turn off the LED:
 }
 
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
 
-  //digitalWrite(ledPin, LOW); // if it's an L (ASCII 76) turn off the LED:
-
-  while (1 < Wire.available()) {  // loop through all but the last
-    int y = Wire.read();         // receive byte as a character
-    Serial.print(y, HEX);            // print the character
-    Serial.print(" ");            // print the character
-    int x = Wire.read();          // receive byte as an integer
-    switch (x) {
-      case cdc_on:
-        Serial.println("ON");
-        cdc_command = cdc_on;
-// TODO: answer
-//        Wire.write(byte(0x34));
-//        Wire.write(byte(0xBE));
-//        Wire.write(byte(0xFF));
-//        Wire.write(byte(0xFF));
-//        Wire.write(byte(0xFF));
-//        Wire.write(byte(0xFF));
-//        Wire.write(byte(0xCF));
-//        Wire.write(byte(0x3C));
-        break;
-      case cdc_off:
-        Serial.println("OFF");
-        break;
-      case cdc_left_hold:
-        Serial.println("LEFT HOLD");
-        break;
-      case cdc_left_release:
-        Serial.println("LEFT RELEASE");
-        break;
-      case cdc_right_hold:
-        Serial.println("RIGHT HOLD");
-        break;
-      case cdc_right_release:
-        Serial.println("RIGHT RELEASE");
-        break;
-      case cdc_down_hold:
-        Serial.println("DOWN HOLD");
-        break;
-      case cdc_down_release:
-        Serial.println("DOWN RELEASE");
-        break;
-      case cdc_up_hold:
-        Serial.println("UP HOLD");
-        break;
-      case cdc_up_release:
-        Serial.println("UP RELEASE");
-        break;
-      default:
-        Serial.println(x);        // print the integer
+  while (0 < Wire.available()) {  // loop through all but the last
+    int x0 = Wire.read();         // receive byte as a character
+    if (0 < Wire.available()) {
+      int x1 = Wire.read();       // receive byte as an integer
+      unsigned int x = ((x1 << 8) + x0);
+      switch (x) {
+        case cdc_on:
+          Serial.println("ON");
+          cdc_command = cdc_on;
+          // TODO: answer
+          break;
+        case cdc_off:
+          Serial.println("OFF");
+          break;
+        case cdc_left_hold:
+          Serial.println("LEFT HOLD");
+          break;
+        case cdc_left_release:
+          Serial.println("LEFT RELEASE");
+          break;
+        case cdc_right_hold:
+          Serial.println("RIGHT HOLD");
+          break;
+        case cdc_right_release:
+          Serial.println("RIGHT RELEASE");
+          break;
+        case cdc_down_hold:
+          Serial.println("DOWN HOLD");
+          break;
+        case cdc_down_release:
+          Serial.println("DOWN RELEASE");
+          break;
+        case cdc_up_hold:
+          Serial.println("UP HOLD");
+          break;
+        case cdc_up_release:
+          Serial.println("UP RELEASE");
+          break;
+        default:
+          Serial.println(x, HEX); // print the integer
+      }
+    } else {
+      Serial.println(x0, HEX);      // print the integer
     }
   }
 }
@@ -147,6 +137,6 @@ void receiveEvent(int howMany) {
 // called by interrupt service routine when response is wanted
 void requestEvent () {
   Serial.println("!!!!!!");
-  digitalWrite(ledPin, HIGH); // turn on the LED:
-  Wire.write (0x42);  // send response
-}  // end of requestEvent
+  digitalWrite(ledPin, HIGH);     // turn on the LED:
+  Wire.write (0xFF);              // send response
+} // end of requestEvent
