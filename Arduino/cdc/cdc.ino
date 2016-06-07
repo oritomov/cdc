@@ -30,33 +30,41 @@ void setup() {
   /**/pinMode(ledPin, OUTPUT);
 
   Wire.begin(64);               // join i2c bus with address #8
-  //Wire.setClock(9600);        // set baud rite
+
+  //Wire.setClock(960);        // set baud rite
+  // set baud rite 960
+  /**/TWBR = 130;  // 1 kHz 
+  //Serial.println(TWBR, HEX);
+  /* Select 4 as the prescaler value - see page 239 of the data sheet */
+  /**/TWSR |= bit (TWPS1);  //&= ~cbi change prescaler 64
+  /**/TWSR |= bit (TWPS0);  //|=sbi change prescaler 64
+  //Serial.println(TWSR, HEX);
  
   //digitalWrite(ledPin, HIGH); // turn on the LED:
 
+  // set up request handler  (in setup)
+  Wire.onRequest(requestEvent);  // interrupt handler for when data is wanted
+  
   Wire.onReceive(receiveEvent); // register event
+
   Serial.begin(9600);           // start serial for output
 }
 
 void loop() {
   delay(100);
+  check();
+}
+
+void check() {
   if (cdc_command != 0) {
     digitalWrite(ledPin, HIGH); // turn on the LED:
-    //for (int j = 0; j < 20; j++) {
+    for (int j = 0; j < 5; j++) {
       delay(100);
 
       byte count = 0;
       for (byte i = 8; i < 120; i++)
       {
-        // set baud rite 9600
-        /**/TWBR = 130;  // 1 kHz 
-         /* Select 4 as the prescaler value - see page 239 of the data sheet */
-       /**/TWSR |= bit (TWPS1);  //&= ~cbi change prescaler 4
-        /**/TWSR |= bit (TWPS0);  //|=sbi change prescaler 4
-        
         Wire.beginTransmission (i);
-        //Serial.println(TWBR, HEX);
-        //Serial.println(TWSR, HEX);
         if (Wire.endTransmission () == 0)
         {
           Serial.print ("Found address: ");
@@ -73,7 +81,7 @@ void loop() {
       Serial.print (count, DEC);
       Serial.println (" device(s).");
     }
-  //}
+  }
   cdc_command = 0;
   digitalWrite(ledPin, LOW); // if it's an L (ASCII 76) turn off the LED:
 }
@@ -85,8 +93,6 @@ void receiveEvent(int howMany) {
   //digitalWrite(ledPin, LOW); // if it's an L (ASCII 76) turn off the LED:
 
   while (1 < Wire.available()) {  // loop through all but the last
-        Serial.println(TWBR, HEX);
-        Serial.println(TWSR, HEX);
     int y = Wire.read();         // receive byte as a character
     Serial.print(y, HEX);            // print the character
     Serial.print(" ");            // print the character
@@ -137,3 +143,10 @@ void receiveEvent(int howMany) {
     }
   }
 }
+
+// called by interrupt service routine when response is wanted
+void requestEvent () {
+  Serial.println("!!!!!!");
+  digitalWrite(ledPin, HIGH); // turn on the LED:
+  Wire.write (0x42);  // send response
+}  // end of requestEvent
