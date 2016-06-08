@@ -14,7 +14,7 @@
 ![](https://github.com/oritomov/cdc/blob/master/4A0%20035%20239.jpg)
 ![](https://github.com/oritomov/cdc/blob/master/Blaupunkt%207%20607%20765%20082.jpg)
 
-#### CD Changer
+#### CD Changer (CDC)
 
 ![](https://github.com/oritomov/cdc/blob/master/CD%20changer.jpg)
 
