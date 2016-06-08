@@ -5,10 +5,6 @@
 
 ![](https://github.com/oritomov/cdc/blob/master/Audo%20Gamma%20CC%20Bose.jpg)
 
-#### HU pinout
-
-![](https://github.com/oritomov/cdc/blob/master/Audo%20Gamma%20CC%20Bose%20pinout.jpg)
-
 #### Audi Interface 4A0 035 239, Blaupunkt 7 607 765 082 (AI) 
 
 ![](https://github.com/oritomov/cdc/blob/master/4A0%20035%20239.jpg)
@@ -17,6 +13,10 @@
 #### CD Changer (CDC)
 
 ![](https://github.com/oritomov/cdc/blob/master/CD_changer.jpg)
+
+### Emulator
+
+![](https://github.com/oritomov/cdc/blob/master/emulator.png)
 
 ### I2C/TWI communication betwwen HU and AI
 #### OFF
