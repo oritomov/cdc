@@ -12,16 +12,16 @@
 
 const int ledPin = 13; // the pin that the LED is attached to
 
-const unsigned int cdc_on            = 0x21A1;
-const unsigned int cdc_off           = 0xA121;
-const unsigned int cdc_left_hold     = 0x0181;
-const unsigned int cdc_left_release  = 0x8101;
-const unsigned int cdc_right_hold    = 0x0282;
-const unsigned int cdc_right_release = 0x8202;
-const unsigned int cdc_down_hold     = 0x0383;
-const unsigned int cdc_down_release  = 0x8303;
-const unsigned int cdc_up_hold       = 0x0484;
-const unsigned int cdc_up_release    = 0x8404;
+const unsigned int HU_START         = 0x21A1;
+const unsigned int HU_STOP          = 0xA121;
+const unsigned int HU_LEFT_HOLD     = 0x0181;
+const unsigned int HU_LEFT_RELEASE  = 0x8101;
+const unsigned int HU_RIGHT_HOLD    = 0x0282;
+const unsigned int HU_RIGHT_RELEASE = 0x8202;
+const unsigned int HU_DOWN_HOLD     = 0x0383;
+const unsigned int HU_DOWN_RELEASE  = 0x8303;
+const unsigned int HU_UP_HOLD       = 0x0484;
+const unsigned int HU_UP_RELEASE    = 0x8404;
 int cdc_command;
 
 void setup() {
@@ -93,36 +93,36 @@ void receiveEvent(int howMany) {
       int x1 = Wire.read();       // receive byte as an integer
       unsigned int x = ((x1 << 8) + x0);
       switch (x) {
-        case cdc_on:
+        case HU_START:
           Serial.println("ON");
-          cdc_command = cdc_on;
+          cdc_command = 1;
           // TODO: answer
           break;
-        case cdc_off:
+        case HU_STOP:
           Serial.println("OFF");
           break;
-        case cdc_left_hold:
+        case HU_LEFT_HOLD:
           Serial.println("LEFT HOLD");
           break;
-        case cdc_left_release:
+        case HU_LEFT_RELEASE:
           Serial.println("LEFT RELEASE");
           break;
-        case cdc_right_hold:
+        case HU_RIGHT_HOLD:
           Serial.println("RIGHT HOLD");
           break;
-        case cdc_right_release:
+        case HU_RIGHT_RELEASE:
           Serial.println("RIGHT RELEASE");
           break;
-        case cdc_down_hold:
+        case HU_DOWN_HOLD:
           Serial.println("DOWN HOLD");
           break;
-        case cdc_down_release:
+        case HU_DOWN_RELEASE:
           Serial.println("DOWN RELEASE");
           break;
-        case cdc_up_hold:
+        case HU_UP_HOLD:
           Serial.println("UP HOLD");
           break;
-        case cdc_up_release:
+        case HU_UP_RELEASE:
           Serial.println("UP RELEASE");
           break;
         default:
