@@ -16,7 +16,7 @@
 
 #### CD Changer (CDC)
 
-![](https://github.com/oritomov/cdc/blob/master/CD%20changer.jpg)
+![](https://github.com/oritomov/cdc/blob/master/CD_changer.jpg)
 
 ### I2C/TWI communication betwwen HU and AI
 #### OFF
