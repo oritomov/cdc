@@ -45,3 +45,6 @@
  * 0 (Ack)
  * (Stop)
 
+### References
+
+ * [PyUSB](http://sourceforge.net/projects/pyusb)
