@@ -47,4 +47,5 @@
 
 ### References
 
+ * [Nick Gammon's page about I2C](http://gammon.com.au/i2c)
  * [PyUSB](http://sourceforge.net/projects/pyusb)
