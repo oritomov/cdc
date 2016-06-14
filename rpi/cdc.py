@@ -47,12 +47,14 @@ def mount():
 		print("Error mounting {} ({}) on {} with options '{}': {}".
 			format(source, fs, target, options, os.strerror(errno)))
 
-on=True
-device=None
-tracks=None
-player=None
-albumNum=0
-trackNum=0
+on = True
+prev = False
+next = False
+device = None
+tracks = None
+player = None
+albumNum = 0
+trackNum = 0
 
 # read cmds from the hu and act like a cd changer
 while True:
@@ -69,25 +71,28 @@ while True:
 
 		# tracks list
 		if (device is not None) and (tracks is None):
-			albums = os.walk(DIR_PATH).next()[1]
-			if albumNum >= len(albums)
+			albums = os.walk(CDC_PATH).next()[1]
+			if albumNum > len(albums) - 1:
 				albumNum = 0
 				trackNum = 0
-			if albumNum < 0
+			if albumNum < 0:
 				albumNum = len(albums) - 1
 				trackNum = 0
-			album = albums[albumNum]
+			if len(albums) > 0:
+				album = albums[albumNum]
+			else:
+				album = "."
 			tracks = glob.glob(CDC_PATH + "/" + album + "/*.mp3")
 			# TODO randomize
 			player = None
 
-		if (tracks is not None) and (trackNum >= len(tracks))
+		if (tracks is not None) and (trackNum >= len(tracks)):
 			# next album
 			albumNum = albumNum + 1
 			trackNum = 0
 			tracks = None
 
-		if (tracks is not None) and (trackNum < 0)
+		if (tracks is not None) and (trackNum < 0):
 			#prev album
 			albumNum = albumNum - 1
 			trackNum = 0
