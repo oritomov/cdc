@@ -12,11 +12,9 @@ DEV_SD_STAR = "/dev/sd*"
 USB_PATH = "/mnt/usb"
 CDC_PATH = USB_PATH + "/cdc"
 
-on=True
+play=True
 device=None
-tracks=None
-player=None
-trackNum=0
+pt=0
 
 def mount(source, target, fs, options=''):
 	ret = ctypes.CDLL('libc.so.6', use_errno=True).mount(source, target, fs, 0, options)
@@ -49,54 +47,38 @@ def find_dev(dev_class_id):
 	return False
 
 # read cmds from the radio and act like a cd changer
-while True:
-#if True:
-	#try:
+#while True:
+if True:
+	try:
 
-		# start play
-		if on and player is None:
+		if play:
+			print "play"
 
 			# find a device
-			if (device is None) and find_dev(MASS_STORAGE):
+			if (device == None) and find_dev(MASS_STORAGE):
 				device = MASS_STORAGE
 				print "found Mass Storage"
 
 				if not os.path.exists(CDC_PATH):
 					sd = glob.glob(DEV_SD_STAR)
 					mount(sd[0], USB_PATH, "vfat")
-					print "muont Mass Storage"
 
-			# tracks list
-			if (device is not None) and (tracks is None):
-				tracks = glob.glob(CDC_PATH + "/*.mp3")
-				print "found ", len(tracks), "tracks"
+				# tracks list
+				f = glob.glob(CDC_PATH + "/*.mp3")
 
-			# play
-			if (tracks is not None) and (player is None):
 				# play
-				player = subprocess.Popen(["omxplayer",tracks[trackNum]],stdin=subprocess.PIPE) #,stdout=subprocess.PIPE,stderr=subprocess.PIPE
-				print "play " + tracks[trackNum]
+				player = subprocess.Popen(["omxplayer",f[pt]],stdin=subprocess.PIPE) #,stdout=subprocess.PIPE,stderr=subprocess.PIPE
+				fi = player.poll()
+				print fi
 
-		#check playing
-		if (player is not None):
-			fi = player.poll()
-			#print fi
-			if fi is not None:
-				player = None
-				# next track
-				trackCount = len(tracks)
-				trackNum = trackNum + 1
-				if trackNum > trackCount - 1:
-					trackNum = 0
-				print "start ", tracks[trackNum]
+				sleep(5.0)
+				player.stdin.write("q") # test stop
+			else:
+				print "Nothing"
 
-		# stop play
-		if not on and player is not None:
-			player.stdin.write("q") # test stop
-			player = None
+		else:
+			print "waiting"
+			#sleep(0.5)
 
-		#print "wait"
-		sleep(0.1)
-
-	#except:
-	#	raise
+	except:
+		raise
