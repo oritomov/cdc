@@ -3,12 +3,14 @@ import ConfigParser
 import ctypes
 import glob
 import io
-#import msvcrt
 import os
 import subprocess
 import usb.core
 import usb.util
 from time import sleep
+import select
+import sys
+import tty
 
 MASS_STORAGE = 0x8
 DEV_SD_STAR = "/dev/sd*"
@@ -16,9 +18,15 @@ USB_PATH = "/mnt/usb"
 CDC_PATH = USB_PATH + "/cdc"
 CONFIG = "config.ini"
 
+tty.setcbreak(sys.stdin.fileno())
+
 # detect a keypress
 def poll_kb():
-    return ord(msvcrt.getch()) if msvcrt.kbhit() else 0
+	key = ""
+	if select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], []):
+		key = sys.stdin.read(1)
+		print key
+	return key
 
 # check devices for a class id
 def find_dev(dev_class_id):
@@ -71,8 +79,8 @@ def read_config(albumNum, trackNum):
 	#								config.get(section, options),
 	#								str(type(options))))
 
-	albumNum = config.getint("cdc", 'album'))  # Just get the value
-	trackNum = config.getint("cdc", 'track'))  # You know the datatype?
+	albumNum = config.getint("cdc", 'album')  # Just get the value
+	trackNum = config.getint("cdc", 'track')  # You know the datatype?
 
 def write_config(albumNum, trackNum):
 	# Check if there is already a configurtion file
@@ -106,12 +114,12 @@ while True:
 
 		# key commands
 		key = poll_kb()
-		if (key != 0):
-			if key == '1':
-				on = not on:
-			elif key == '2':
+		if (key != ""):
+			if key == "1":
+				on = not on
+			elif key == "2":
 				next = True
-			elif key == '3':
+			elif key == "3":
 				prev = True
 
 		# find a usb storage
@@ -170,17 +178,17 @@ while True:
 
 		# next
 		if next and (player is not None):
-			next = None
+			next = False
 			player.stdin.write("q")
 			player = None
-			trackNo = trackNo + 1
+			trackNum = trackNum + 1
 
 		# prev
 		if prev and (player is not None):
-			prev = None
+			prev = False
 			player.stdin.write("q")
 			player = None
-			trackNo = trackNo - 1
+			trackNum = trackNum - 1
 
 		# stop play
 		if not on and (player is not None):
