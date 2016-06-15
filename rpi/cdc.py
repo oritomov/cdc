@@ -1,6 +1,9 @@
 #!/usr/bin/python
+import ConfigParser
 import ctypes
 import glob
+import io
+#import msvcrt
 import os
 import subprocess
 import usb.core
@@ -11,6 +14,11 @@ MASS_STORAGE = 0x8
 DEV_SD_STAR = "/dev/sd*"
 USB_PATH = "/mnt/usb"
 CDC_PATH = USB_PATH + "/cdc"
+CONFIG = "config.ini"
+
+# detect a keypress
+def poll_kb():
+    return ord(msvcrt.getch()) if msvcrt.kbhit() else 0
 
 # check devices for a class id
 def find_dev(dev_class_id):
@@ -47,10 +55,46 @@ def mount():
 		print("Error mounting {} ({}) on {} with options '{}': {}".
 			format(source, fs, target, options, os.strerror(errno)))
 
+# load the configuration file
+def read_config(albumNum, trackNum):
+	with open(CONFIG) as file:
+		cfgfile = file.read()
+	config = ConfigParser.RawConfigParser(allow_no_value=True)
+	config.readfp(io.BytesIO(cfgfile))
+
+	# list all contents
+	#print("List all contents")
+	#for section in config.sections():
+	#	print("Section: %s" % section)
+	#	for options in config.options(section):
+	#		print("x %s:::%s:::%s" % (options,
+	#								config.get(section, options),
+	#								str(type(options))))
+
+	albumNum = config.getint("cdc", 'album'))  # Just get the value
+	trackNum = config.getint("cdc", 'track'))  # You know the datatype?
+
+def write_config(albumNum, trackNum):
+	# Check if there is already a configurtion file
+	if os.path.isfile(CONFIG):
+		if os.path.isfile(CONFIG + ".bak"):
+			os.remove(CONFIG + ".bak")
+		os.rename(CONFIG, CONFIG + ".bak")
+	# Create the configuration file as it doesn't exist yet
+	cfgfile = open(CONFIG, 'w')
+
+	# Add content to the file
+	config = ConfigParser.ConfigParser()
+	config.add_section("cdc")
+	config.set("cdc", "album", albumNum)
+	config.set("cdc", "track", trackNum)
+	config.write(cfgfile)
+	cfgfile.close()
+
 on = True
 prev = False
 next = False
-device = None
+usb_storage = False
 tracks = None
 player = None
 albumNum = 0
@@ -60,17 +104,29 @@ trackNum = 0
 while True:
 	try:
 
-		# find a device
-		if (device is None) and find_dev(MASS_STORAGE):
-			device = MASS_STORAGE
+		# key commands
+		key = poll_kb()
+		if (key != 0):
+			if key == '1':
+				on = not on:
+			elif key == '2':
+				next = True
+			elif key == '3':
+				prev = True
+
+		# find a usb storage
+		if (not usb_storage) and find_dev(MASS_STORAGE):
+			usb_storage = True
 			print "found Mass Storage"
 
 			if not os.path.exists(CDC_PATH):
 				mount()
-				tracks = None
+
+			tracks = None
+			read_config(albumNum, trackNum)
 
 		# tracks list
-		if (device is not None) and (tracks is None):
+		if usb_storage and (tracks is None):
 			albums = os.walk(CDC_PATH).next()[1]
 			if albumNum > len(albums) - 1:
 				albumNum = 0
@@ -101,6 +157,7 @@ while True:
 		# start play
 		if on and (tracks is not None) and (player is None):
 			player = subprocess.Popen(["omxplayer",tracks[trackNum]],stdin=subprocess.PIPE) #,stdout=subprocess.PIPE,stderr=subprocess.PIPE
+			write_config(albumNum, trackNum)
 
 		#check playing
 		if player is not None:
@@ -133,7 +190,7 @@ while True:
 		sleep(0.1)
 
 	except:
-		device=None
-		tracks=None
-		player=None
+		usb_storage = False
+		tracks = None
+		player = None
 		raise
