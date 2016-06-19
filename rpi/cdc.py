@@ -8,25 +8,13 @@ import subprocess
 import usb.core
 import usb.util
 from time import sleep
-import select
-import sys
-import tty
+
+import kbd as cmds
 
 MASS_STORAGE = 0x8
 DEV_SD_STAR = "/dev/sd*"
 USB_PATH = "/mnt/usb"
 CDC_PATH = USB_PATH + "/cdc"
-CONFIG = "config.ini"
-
-tty.setcbreak(sys.stdin.fileno())
-
-# detect a keypress
-def poll_kb():
-	key = ""
-	if select.select([sys.stdin], [], [], 0) == ([sys.stdin], [], []):
-		key = sys.stdin.read(1)
-		print key
-	return key
 
 # check devices for a class id
 def find_dev(dev_class_id):
@@ -63,64 +51,15 @@ def mount():
 		print("Error mounting {} ({}) on {} with options '{}': {}".
 			format(source, fs, target, options, os.strerror(errno)))
 
-# load the configuration file
-def read_config(albumNum, trackNum):
-	with open(CONFIG) as file:
-		cfgfile = file.read()
-	config = ConfigParser.RawConfigParser(allow_no_value=True)
-	config.readfp(io.BytesIO(cfgfile))
-
-	# list all contents
-	#print("List all contents")
-	#for section in config.sections():
-	#	print("Section: %s" % section)
-	#	for options in config.options(section):
-	#		print("x %s:::%s:::%s" % (options,
-	#								config.get(section, options),
-	#								str(type(options))))
-
-	albumNum = config.getint("cdc", 'album')  # Just get the value
-	trackNum = config.getint("cdc", 'track')  # You know the datatype?
-
-def write_config(albumNum, trackNum):
-	# Check if there is already a configurtion file
-	if os.path.isfile(CONFIG):
-		if os.path.isfile(CONFIG + ".bak"):
-			os.remove(CONFIG + ".bak")
-		os.rename(CONFIG, CONFIG + ".bak")
-	# Create the configuration file as it doesn't exist yet
-	cfgfile = open(CONFIG, 'w')
-
-	# Add content to the file
-	config = ConfigParser.ConfigParser()
-	config.add_section("cdc")
-	config.set("cdc", "album", albumNum)
-	config.set("cdc", "track", trackNum)
-	config.write(cfgfile)
-	cfgfile.close()
-
-on = True
-prev = False
-next = False
 usb_storage = False
-tracks = None
-player = None
-albumNum = 0
-trackNum = 0
+cmds.connect()
 
 # read cmds from the hu and act like a cd changer
 while True:
 	try:
 
-		# key commands
-		key = poll_kb()
-		if (key != ""):
-			if key == "1":
-				on = not on
-			elif key == "2":
-				next = True
-			elif key == "3":
-				prev = True
+		# get commands
+		cdc_cmd = cmds.get_command()
 
 		# find a usb storage
 		if (not usb_storage) and find_dev(MASS_STORAGE):
@@ -130,75 +69,62 @@ while True:
 			if not os.path.exists(CDC_PATH):
 				mount()
 
-			tracks = None
-			read_config(albumNum, trackNum)
-
-		# tracks list
-		if usb_storage and (tracks is None):
-			albums = os.walk(CDC_PATH).next()[1]
-			if albumNum > len(albums) - 1:
-				albumNum = 0
-				trackNum = 0
-			if albumNum < 0:
-				albumNum = len(albums) - 1
-				trackNum = 0
-			if len(albums) > 0:
-				album = albums[albumNum]
-			else:
-				album = "."
-			tracks = glob.glob(CDC_PATH + "/" + album + "/*.mp3")
-			# TODO randomize
-			player = None
-
-		if (tracks is not None) and (trackNum >= len(tracks)):
-			# next album
-			albumNum = albumNum + 1
-			trackNum = 0
-			tracks = None
-
-		if (tracks is not None) and (trackNum < 0):
-			#prev album
-			albumNum = albumNum - 1
-			trackNum = 0
-			tracks = None
+			r = os.popen("mpd /home/pi/.mpd/mpd.conf").read() #restart mpd
+			if r is not None:
+				print r
+			r = os.popen("mpc pause").read()
+			if r is not None:
+				print r
+			r = os.popen("mpc update").read()
+			if r is not None:
+				print r
 
 		# start play
-		if on and (tracks is not None) and (player is None):
-			player = subprocess.Popen(["omxplayer",tracks[trackNum]],stdin=subprocess.PIPE) #,stdout=subprocess.PIPE,stderr=subprocess.PIPE
-			write_config(albumNum, trackNum)
-
-		#check playing
-		if player is not None:
-			fi = player.poll()
-			if fi is not None:
-				player = None
-				# next track
-				trackCount = len(tracks)
-				trackNum = trackNum + 1
-
-		# next
-		if next and (player is not None):
-			next = False
-			player.stdin.write("q")
-			player = None
-			trackNum = trackNum + 1
-
-		# prev
-		if prev and (player is not None):
-			prev = False
-			player.stdin.write("q")
-			player = None
-			trackNum = trackNum - 1
+		if usb_storage and cdc_cmd == cmds.CDC_PLAY:
+			r = os.popen("mpc play").read()
+			if r is not None:
+				print r
 
 		# stop play
-		if not on and (player is not None):
-			player.stdin.write("q") # test stop
-			player = None
+		elif usb_storage and cdc_cmd == cmds.CDC_STOP:
+			r = os.popen("mpc pause").read()
+			if r is not None:
+				print r
+
+		# next
+		elif usb_storage and cdc_cmd == cmds.CDC_NEXT:
+			r = os.popen("mpc next").read()
+			if r is not None:
+				print r
+
+		# prev
+		elif usb_storage and cdc_cmd == cmds.CDC_PREV:
+			r = os.popen("mpc prev").read()
+			if r is not None:
+				print r
+
+		# next
+		elif usb_storage and cdc_cmd == cmds.CDC_SEEK_FWD:
+			while(1):
+				os.popen("mpc seek +00:00:10")
+				if cmds.get_command() is not None:
+					break
+
+		# prev
+		elif usb_storage and cdc_cmd == cmds.CDC_SEEK_RWD:
+			while(1):
+				os.popen("mpc seek -00:00:10")
+				if cmds.get_command() is not None:
+					break
+
+		#check playing
+		if usb_storage:
+			r = os.popen("mpc").read()
+			if r is None:
+				print "stopped"
 
 		sleep(0.1)
 
 	except:
 		usb_storage = False
-		tracks = None
-		player = None
 		raise
