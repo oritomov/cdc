@@ -50,6 +50,7 @@ def mount():
 		#raise RuntimeError
 		print("Error mounting {} ({}) on {} with options '{}': {}".
 			format(source, fs, target, options, os.strerror(errno)))
+	return
 
 usb_storage = False
 cmds.connect()
@@ -116,6 +117,21 @@ while True:
 				os.popen("mpc seek -00:00:10")
 				if cmds.get_command() is not None:
 					break
+
+		elif usb_storage and cdc_cmd == cmds.CDC_SCAN:
+			r = os.popen("mpc update").read()
+			if r is not None:
+				print r
+
+		elif usb_storage and cdc_cmd == cmds.CDC_SHFFL:
+			r = os.popen("mpc random on").read()
+			if r is not None:
+				print r
+
+		elif usb_storage and cdc_cmd == cmds.CDC_SEQNT:
+			r = os.popen("mpc random off").read()
+			if r is not None:
+				print r
 
 		#check playing
 		if usb_storage:
