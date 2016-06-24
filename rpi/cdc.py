@@ -107,14 +107,14 @@ def play_cd(albumNum, trackNum):
 	r = cmd("mpc ls")
 	if r != "":
 		if albumNum >= len(r):
-			albumNum = len(r) - 1
+			albumNum = 0
 		if albumNum < 0:
-			return
+			albumNum = len(r) - 1
 		album = r[albumNum]
 		trackNum = 0
 		write_config(albumNum, trackNum)
 		cmd("mpc clear")
-		cmd("mpc ls " + album + " | mpc add")
+		cmd("mpc ls \"" + album + "\" | mpc add")
 	return
 
 usb_storage = False
@@ -139,6 +139,10 @@ while True:
 
 			read_config(albumNum, trackNum)
 			play_cd(albumNum, trackNum)
+
+		if usb_storage and not find_dev(MASS_STORAGE):
+			usb_storage = False
+			#cmd("mpc stop")
 
 		if usb_storage:
 			# start play
@@ -203,14 +207,16 @@ while True:
 			if r is not None:
 				r = r.split("/", 1)
 				r = r[0].split("#", 1)
-				tr = string.atoi(r[1], 16)
+				tr = string.atoi(r[1])
 				#hu.set_status(albumNum, trackNum, timer)
 				if tr != trackNum:
 					trackNum = tr
 					write_config(albumNum, trackNum)
 					hu.set_status(albumNum, trackNum)
 			else:
-				print "stopped"
+				albumNum++
+				trackNum = 0
+				play_cd(albumNum, trackNum)
 		#if usb_storage
 
 		sleep(0.1)
