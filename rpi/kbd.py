@@ -25,6 +25,10 @@ tty.setcbreak(sys.stdin.fileno())
 def connect():
 	return True
 
+# close
+def close():
+	return True
+
 # detect a keypress
 def poll_kb():
 	key = ""
@@ -55,3 +59,7 @@ def get_command():
 			print "reward"
 			return CDC_SEEK_RWD
 	return None
+
+# display status
+def set_status(albumNum, trackNum)
+	return
