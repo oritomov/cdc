@@ -61,5 +61,5 @@ def get_command():
 	return None
 
 # display status
-def set_status(albumNum, trackNum)
+def set_status(albumNum, trackNum):
 	return

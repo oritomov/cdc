@@ -41,8 +41,15 @@ def find_dev(dev_class_id):
 	return False
 
 def mount():
-	sd = glob.glob(DEV_SD_STAR)
-	source = sd[0]
+	while True:
+		sd = glob.glob(DEV_SD_STAR)
+		if len(sd) > 1:
+			print sd
+			source = sd[0]
+			if len(source) == 8:
+				source = sd[1]
+			break
+		sleep(0.1)
 	target = USB_PATH
 	fs = "vfat"
 	options = ''
@@ -97,6 +104,7 @@ def write_config(albumNum, trackNum):
 
 # execute a command
 def cmd(command):
+	print command
 	res = os.popen(command).read()
 	if res is not None:
 		print res
@@ -105,19 +113,29 @@ def cmd(command):
 # load new cd-dir
 def play_cd(albumNum, trackNum):
 	r = cmd("mpc ls")
-	if r != "":
-		if albumNum >= len(r):
+	if r is not None:
+		r = r.split("\n")
+		print len(r) - 1, " albums"
+		print albumNum, " album"
+		if albumNum > len(r) - 2: # there is an empty line at the end
 			albumNum = 0
+			trackNum = 1
+		print albumNum, " album"
 		if albumNum < 0:
-			albumNum = len(r) - 1
+			albumNum = len(r) - 2 # there is an empty line at the end
+			trackNum = 1
+		print albumNum, " album"
 		album = r[albumNum]
-		trackNum = 0
+		print album
 		write_config(albumNum, trackNum)
 		cmd("mpc clear")
-		cmd("mpc ls \"" + album + "\" | mpc add")
+		cmd("mpc listall \"" + album + "\" | mpc add")
+		cmd("mpc play " + str(trackNum))
 	return
 
 usb_storage = False
+albumNum = 0
+trackNum = 1
 hu.connect()
 
 # read hu commands from the vag and act like a cd changer
@@ -141,6 +159,7 @@ while True:
 			play_cd(albumNum, trackNum)
 
 		if usb_storage and not find_dev(MASS_STORAGE):
+			print "missing Mass Storage"
 			usb_storage = False
 			#cmd("mpc stop")
 
@@ -204,25 +223,26 @@ while True:
 
 			#check playing
 			r = cmd("mpc |grep ] #")
-			if r is not None:
+			if (r is not None) and (len(r) > 0):
 				r = r.split("/", 1)
 				r = r[0].split("#", 1)
-				tr = string.atoi(r[1])
-				#hu.set_status(albumNum, trackNum, timer)
-				if tr != trackNum:
-					trackNum = tr
-					write_config(albumNum, trackNum)
-					hu.set_status(albumNum, trackNum)
+				if len(r) > 1:
+					tr = string.atoi(r[1])
+					#hu.set_status(albumNum, trackNum, timer)
+					if tr != trackNum:
+						trackNum = tr
+						write_config(albumNum, trackNum)
+						hu.set_status(albumNum, trackNum)
 			else:
-				albumNum++
-				trackNum = 0
+				albumNum = albumNum + 1
+				trackNum = 1
 				play_cd(albumNum, trackNum)
 		#if usb_storage
 
 		sleep(0.1)
 
 	except (KeyboardInterrupt):
-        hu.close()
+		hu.close()
 		break
 
 	except:
