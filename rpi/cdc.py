@@ -104,10 +104,10 @@ def write_config(albumNum, trackNum):
 
 # execute a command
 def cmd(command):
-	print command
+	#print command
 	res = os.popen(command).read()
-	if res is not None:
-		print res
+	#if res is not None:
+	#	print res
 	return res
 
 # load new cd-dir
@@ -116,15 +116,12 @@ def play_cd(albumNum, trackNum):
 	if r is not None:
 		r = r.split("\n")
 		print len(r) - 1, " albums"
-		print albumNum, " album"
 		if albumNum > len(r) - 2: # there is an empty line at the end
 			albumNum = 0
 			trackNum = 1
-		print albumNum, " album"
 		if albumNum < 0:
 			albumNum = len(r) - 2 # there is an empty line at the end
 			trackNum = 1
-		print albumNum, " album"
 		album = r[albumNum]
 		print album
 		write_config(albumNum, trackNum)
@@ -136,6 +133,7 @@ def play_cd(albumNum, trackNum):
 usb_storage = False
 albumNum = 0
 trackNum = 1
+play = False
 hu.connect()
 
 # read hu commands from the vag and act like a cd changer
@@ -156,12 +154,19 @@ while True:
 			cmd("mpd /home/pi/.mpd/mpd.conf") #restart mpd
 
 			read_config(albumNum, trackNum)
+#TODO
+			print "album: ", albumNum, ", track ", trackNum
 			play_cd(albumNum, trackNum)
 
 		if usb_storage and not find_dev(MASS_STORAGE):
 			print "missing Mass Storage"
 			usb_storage = False
 			#cmd("mpc stop")
+
+		if cdc_cmd == hu.CDC_PLAY:
+			play = True
+		elif cdc_cmd == hu.CDC_STOP:
+			play = False
 
 		if usb_storage:
 			# start play
@@ -221,22 +226,23 @@ while True:
 			elif cdc_cmd == hu.CDC_SEQNT:
 				cmd("mpc random off")
 
-			#check playing
-			r = cmd("mpc |grep ] #")
-			if (r is not None) and (len(r) > 0):
-				r = r.split("/", 1)
-				r = r[0].split("#", 1)
-				if len(r) > 1:
-					tr = string.atoi(r[1])
-					#hu.set_status(albumNum, trackNum, timer)
-					if tr != trackNum:
-						trackNum = tr
-						write_config(albumNum, trackNum)
-						hu.set_status(albumNum, trackNum)
-			else:
-				albumNum = albumNum + 1
-				trackNum = 1
-				play_cd(albumNum, trackNum)
+			if play:
+				#check playing
+				r = cmd("mpc |grep ] #")
+				if (r is not None) and (len(r) > 0):
+					r = r.split("/", 1)
+					r = r[0].split("#", 1)
+					if len(r) > 1:
+						tr = string.atoi(r[1])
+						#hu.set_status(albumNum, trackNum, timer)
+						if tr != trackNum:
+							trackNum = tr
+							write_config(albumNum, trackNum)
+							hu.set_status(albumNum, trackNum)
+				else:
+					albumNum = albumNum + 1
+					trackNum = 1
+					play_cd(albumNum, trackNum)
 		#if usb_storage
 
 		sleep(0.1)
