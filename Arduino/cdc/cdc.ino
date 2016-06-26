@@ -24,7 +24,7 @@ const unsigned int HU_DOWN_RELEASE  = 0x8303;
 const unsigned int HU_UP_HOLD       = 0x0484;
 const unsigned int HU_UP_RELEASE    = 0x8404;
 
-const unsigned int HU_CANCEL       = 0x22A2;
+const unsigned int HU_CANCEL        = 0x22A2;
 
 int cdc_command;
 
