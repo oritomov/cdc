@@ -9,6 +9,7 @@
 
 
 #include <Wire.h>
+#include "vag.h"
 
 const int ledPin = 13; // the pin that the LED is attached to
 
@@ -22,6 +23,9 @@ const unsigned int HU_DOWN_HOLD     = 0x0383;
 const unsigned int HU_DOWN_RELEASE  = 0x8303;
 const unsigned int HU_UP_HOLD       = 0x0484;
 const unsigned int HU_UP_RELEASE    = 0x8404;
+
+const unsigned int HU_UNKNOWN       = 0x22A2;
+
 int cdc_command;
 
 void setup() {
@@ -43,7 +47,7 @@ void setup() {
   
   Wire.onReceive(receiveEvent);   // register event
 
-  Serial.begin(9600);             // start serial for output
+  Serial.begin(9600);             // start serial for output, SERIAL_8N1 data, parity, and stop bits
 }
 
 void loop() {
@@ -94,12 +98,14 @@ void receiveEvent(int howMany) {
       unsigned int x = ((x1 << 8) + x0);
       switch (x) {
         case HU_START:
-          Serial.println("ON");
+          Serial.print(CDC_PLAY);
+          Serial.print(CDC_END_CMD);
           cdc_command = 1;
           // TODO: answer
           break;
         case HU_STOP:
-          Serial.println("OFF");
+          Serial.print(CDC_STOP);
+          Serial.print(CDC_END_CMD);
           break;
         case HU_LEFT_HOLD:
           Serial.println("LEFT HOLD");
@@ -114,16 +120,16 @@ void receiveEvent(int howMany) {
           Serial.println("RIGHT RELEASE");
           break;
         case HU_DOWN_HOLD:
-          Serial.println("DOWN HOLD");
+          Serial.print(CDC_NEXT);
           break;
         case HU_DOWN_RELEASE:
-          Serial.println("DOWN RELEASE");
+          //Serial.println("DOWN RELEASE");
           break;
         case HU_UP_HOLD:
-          Serial.println("UP HOLD");
+          Serial.print(CDC_PREV);
           break;
         case HU_UP_RELEASE:
-          Serial.println("UP RELEASE");
+          //Serial.println("UP RELEASE");
           break;
         default:
           Serial.println(x, HEX); // print the integer

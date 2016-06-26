@@ -10,7 +10,8 @@ import usb.core
 import usb.util
 from time import sleep
 
-import kbd as hu
+#import kbd as hu
+import vag as hu
 
 MASS_STORAGE = 0x8
 DEV_SD_STAR = "/dev/sd*"
