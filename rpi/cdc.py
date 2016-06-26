@@ -128,6 +128,7 @@ def play_cd(albumNum, trackNum):
 		write_config(albumNum, trackNum)
 		cmd("mpc clear")
 		cmd("mpc listall \"" + album + "\" | mpc add")
+		cmd("mpc volume 100")
 		cmd("mpc play " + str(trackNum))
 	return
 
