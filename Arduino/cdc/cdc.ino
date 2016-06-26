@@ -24,7 +24,7 @@ const unsigned int HU_DOWN_RELEASE  = 0x8303;
 const unsigned int HU_UP_HOLD       = 0x0484;
 const unsigned int HU_UP_RELEASE    = 0x8404;
 
-const unsigned int HU_UNKNOWN       = 0x22A2;
+const unsigned int HU_CANCEL       = 0x22A2;
 
 int cdc_command;
 
@@ -58,7 +58,7 @@ void loop() {
 void check() {
   if (cdc_command != 0) {
     digitalWrite(ledPin, HIGH);   // turn on the LED:
-    for (int j = 0; j < 5; j++) {
+    for (int j = 0; j < 18; j++) {
       delay(100);
 
       byte count = 0;
@@ -130,6 +130,9 @@ void receiveEvent(int howMany) {
           break;
         case HU_UP_RELEASE:
           //Serial.println("UP RELEASE");
+          break;
+        case HU_CANCEL:
+          Serial.println(HU_CANCEL);
           break;
         default:
           Serial.println(x, HEX); // print the integer
