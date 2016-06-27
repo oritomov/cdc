@@ -49,3 +49,5 @@
 
  * [Nick Gammon's page about I2C](http://gammon.com.au/i2c)
  * [PyUSB](http://sourceforge.net/projects/pyusb)
+ * [MPD guide](http://crunchbang.org/forums/viewtopic.php?pid=182574)
+ * [Raspberry Pi Arduino Communication](http://www.robopapa.com/Projects/RaspberryPiArduinoCommunication)
