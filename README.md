@@ -1,4 +1,4 @@
-# Audi Gamma CC Bose CD Changer Emulator Arduino Raspbery Pi
+# Emulator (Arduino & Raspbery Pi) for<br>Audi Gamma CC Bose CD Changer 
 
 ### Hardware
 #### Audi Gamma CC Bose - Head Unit (HU)
