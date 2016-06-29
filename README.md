@@ -18,6 +18,10 @@
 
 ![](https://github.com/oritomov/cdc/blob/master/emulator.png)
 
+### Circuit
+
+![](https://github.com/oritomov/cdc/blob/master/circuit.png)
+
 ### I2C/TWI communication betwwen HU and AI
 #### OFF
 
