@@ -1,0 +1,57 @@
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get autoremove
+
+=== usb ===
+
+mkdir -p /mnt/usb
+sudo ls /dev/sd*
+sudo mount -t vfat /dev/sda1 /mnt/usb
+
+=== PyUSB ===
+
+https://github.com/walac/pyusb
+
+sudo apt-get install python libusb-1.0-0
+
+=== MPD/MPC ===
+
+http://crunchbang.org/forums/viewtopic.php?pid=182574
+
+sudo service mpd stop
+
+#todo: make it permanent
+sudo update-rc.d mpd disable
+sudo update-rc.d -f mpd remove
+
+mpd.conf
+music_directory        "/mnt/usb/cdc"
+playlist_directory     "/home/pi/.mpd/playlists"
+db_file            "/home/pi/.mpd/database"
+log_file        "/home/pi/.mpd/mpd.log"
+pid_file        "/home/pi/.mpd/mpd.pid"
+state_file        "/home/pi/.mpd/mpdstate"
+
+mpd /home/pi/.mpd/mpd.conf
+
+=== UART ===
+
+sudo apt-get install python3-serial
+
+http://www.robopapa.com/Projects/RaspberryPiArduinoCommunication
+
+=== Bluetooth ===
+
+http://www.modmypi.com/blog/installing-the-raspberry-pi-nano-bluetooth-dongle
+
+sudo apt-get install bluetooth bluez bluez-tools blueman
+
+https://www.raspberrypi.org/forums/viewtopic.php?t=68779
+
+bluetoothctl instead of bluez-simple-agent
+
+=======
+
+sudo nano /etc/rc.local 
+	python /home/pi/cdc.py&
+
