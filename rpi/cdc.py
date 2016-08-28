@@ -77,10 +77,12 @@ def read_config(albumNum, trackNum):
 	#		print("x %s:::%s:::%s" % (options,
 	#								config.get(section, options),
 	#								str(type(options))))
-
-	albumNum = config.getint("cdc", 'album')  # Just get the value
-	trackNum = config.getint("cdc", 'track')  # You know the datatype?
-	print "read album: ", albumNum, ", track ", trackNum
+	try:
+		albumNum = config.getint("cdc", 'album')  # Just get the value
+		trackNum = config.getint("cdc", 'track')  # You know the datatype?
+		print "read album: ", albumNum, ", track ", trackNum
+	except:
+		print "can\'t read config file"
 	return
 
 # store the configuration file
@@ -112,7 +114,7 @@ def cmd(command):
 	return res
 
 # load new cd-dir
-def play_cd(albumNum, trackNum):
+def play_cd(change, albumNum, trackNum, play):
 	r = cmd("mpc ls")
 	if r is not None:
 		r = r.split("\n")
@@ -130,6 +132,8 @@ def play_cd(albumNum, trackNum):
 		cmd("mpc listall \"" + album + "\" | mpc add")
 		cmd("mpc volume 100")
 		cmd("mpc play " + str(trackNum))
+		if not play:
+			cmd("mpc pause")
 	return
 
 usb_storage = False
@@ -158,7 +162,7 @@ while True:
 			read_config(albumNum, trackNum)
 #TODO
 			print "album: ", albumNum, ", track ", trackNum
-			play_cd(albumNum, trackNum)
+			play_cd(None, albumNum, trackNum, play)
 
 		if usb_storage and not find_dev(MASS_STORAGE):
 			print "missing Mass Storage"
@@ -202,22 +206,22 @@ while True:
 						break
  
 			elif cdc_cmd == hu.CDC_CD1:
-				play_cd(1)
+				play_cd(0, albumNum, trackNum, play)
 
 			elif cdc_cmd == hu.CDC_CD2:
-				play_cd(2)
+				play_cd(1, albumNum, trackNum, play)
  
 			elif cdc_cmd == hu.CDC_CD3:
-				play_cd(3)
+				play_cd(2, albumNum, trackNum, play)
  
 			elif cdc_cmd == hu.CDC_CD4:
-				play_cd(4)
+				play_cd(3, albumNum, trackNum, play)
  
 			elif cdc_cmd == hu.CDC_CD5:
-				play_cd(5)
+				play_cd(4, albumNum, trackNum, play)
  
 			elif cdc_cmd == hu.CDC_CD6:
-				play_cd(6)
+				play_cd(5, albumNum, trackNum, play)
 
 			elif cdc_cmd == hu.CDC_SCAN:
 				cmd("mpc update")
@@ -244,7 +248,7 @@ while True:
 				else:
 					albumNum = albumNum + 1
 					trackNum = 1
-					play_cd(albumNum, trackNum)
+					play_cd(None, albumNum, trackNum, play)
 		#if usb_storage
 
 		sleep(0.1)
