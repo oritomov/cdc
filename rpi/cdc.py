@@ -5,7 +5,6 @@ import glob
 import io
 import os
 import string
-import subprocess
 import usb.core
 import usb.util
 from time import sleep
@@ -61,7 +60,7 @@ def mount():
 		print("Error mounting {} ({}) on {} with options '{}': {}".
 			format(source, fs, target, options, os.strerror(errno)))
 	return
- 
+
 # load the configuration file
 def read_config(albumNum, trackNum):
 	with open(CONFIG) as file:
@@ -169,67 +168,67 @@ while True:
 			usb_storage = False
 			#cmd("mpc stop")
 
-		if cdc_cmd == hu.CDC_PLAY:
+		if cdc_cmd == hu.HU_PLAY:
 			play = True
-		elif cdc_cmd == hu.CDC_STOP:
+		elif cdc_cmd == hu.HU_STOP:
 			play = False
 
 		if usb_storage:
 			# start play
-			if cdc_cmd == hu.CDC_PLAY:
+			if cdc_cmd == hu.HU_PLAY:
 				cmd("mpc play")
 
 			# stop play
-			elif cdc_cmd == hu.CDC_STOP:
+			elif cdc_cmd == hu.HU_STOP:
 				cmd("mpc pause")
 
 			# next
-			elif cdc_cmd == hu.CDC_NEXT:
+			elif cdc_cmd == hu.HU_NEXT:
 				cmd("mpc next")
 
 			# prev
-			elif cdc_cmd == hu.CDC_PREV:
+			elif cdc_cmd == hu.HU_PREV:
 				cmd("mpc prev")
 
 			# next
-			elif cdc_cmd == hu.CDC_SEEK_FWD:
+			elif cdc_cmd == hu.HU_SEEK_FWD:
 				while(1):
 					cmd("mpc seek +00:00:10")
 					if hu.get_command() is not None:
 						break
 
 			# prev
-			elif cdc_cmd == hu.CDC_SEEK_RWD:
+			elif cdc_cmd == hu.HU_SEEK_RWD:
 				while(1):
 					cmd("mpc seek -00:00:10")
 					if hu.get_command() is not None:
 						break
- 
-			elif cdc_cmd == hu.CDC_CD1:
+
+			elif cdc_cmd == hu.HU_CD1:
 				play_cd(0, albumNum, trackNum, play)
 
-			elif cdc_cmd == hu.CDC_CD2:
+			elif cdc_cmd == hu.HU_CD2:
 				play_cd(1, albumNum, trackNum, play)
- 
-			elif cdc_cmd == hu.CDC_CD3:
+
+			elif cdc_cmd == hu.HU_CD3:
 				play_cd(2, albumNum, trackNum, play)
- 
-			elif cdc_cmd == hu.CDC_CD4:
+
+			elif cdc_cmd == hu.HU_CD4:
 				play_cd(3, albumNum, trackNum, play)
- 
-			elif cdc_cmd == hu.CDC_CD5:
+
+			elif cdc_cmd == hu.HU_CD5:
 				play_cd(4, albumNum, trackNum, play)
- 
-			elif cdc_cmd == hu.CDC_CD6:
+
+			elif cdc_cmd == hu.HU_CD6:
 				play_cd(5, albumNum, trackNum, play)
 
-			elif cdc_cmd == hu.CDC_SCAN:
+			elif cdc_cmd == hu.HU_SCAN:
 				cmd("mpc update")
 
-			elif cdc_cmd == hu.CDC_SHFFL:
+			elif cdc_cmd == hu.HU_SHFFL:
 				cmd("mpc random on")
 
-			elif cdc_cmd == hu.CDC_SEQNT:
+			elif cdc_cmd == hu.HU_SEQNT:
 				cmd("mpc random off")
 
 			if play:
