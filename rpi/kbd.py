@@ -1,3 +1,4 @@
+import logging
 import select
 import sys
 import tty
@@ -41,22 +42,22 @@ def get_command():
 	key = poll_kb()
 	if (key != ""):
 		if key == "1":
-			print "play"
+			logging.info("play")
 			return HU_PLAY
 		elif key == "2":
-			print "stop"
+			logging.info("stop")
 			return HU_STOP
 		elif key == "3":
-			print "next"
+			logging.info("next")
 			return HU_NEXT
 		elif key == "4":
-			print "prev"
+			logging.info("prev")
 			return HU_PREV
 		elif key == "5":
-			print "forward"
+			logging.info("forward")
 			return HU_SEEK_FWD
 		elif key == "6":
-			print "reward"
+			logging.info("reward")
 			return HU_SEEK_RWD
 	return None
 

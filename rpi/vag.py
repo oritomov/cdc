@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import logging
 import serial
 import time
 
@@ -115,17 +116,17 @@ def get_command():
 			# stop seek
 			ser.timeout = timeout_normal
 			if (c == HU_PLAY):
-				print "serial play"
+				logging.info("serial play")
 			elif (c == HU_STOP):
-				print "serial stop"
+				logging.info("serial stop")
 			elif (c == HU_SEQNT):
-				print "serial sequent"
+				logging.info("serial sequent")
 			return c
 	elif (c == HU_NEXT) or (c == HU_PREV):
 		if (c == HU_NEXT):
-			print "serial next"
+			logging.info("serial next")
 		elif (c == HU_PREV):
-			print "serial prev"
+			logging.info("serial prev")
 		return c
 	elif (c == HU_SEEK_FWD) or  (c == HU_SEEK_RWD):
 		ser.timeout = timeout_seek
@@ -134,7 +135,7 @@ def get_command():
 		if (ser.read() == HU_END_CMD) and (ser.read() == HU_CDSET):
 			return c
 	#else
-	print "serial: ", c
+	logging.warning("serial: {}".format(c))
 
 	return None
 
