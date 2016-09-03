@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import configparser
+import ConfigParser
 import ctypes
 import glob
 import io
@@ -66,7 +66,7 @@ def mount():
 def read_config(albumNum, trackNum):
 	with open(CONFIG) as file:
 		cfgfile = file.read()
-	config = configparser.RawConfigParser(allow_no_value=True)
+	config = ConfigParser.RawConfigParser(allow_no_value=True)
 	config.readfp(io.BytesIO(cfgfile))
 
 	# list all contents
@@ -83,7 +83,7 @@ def read_config(albumNum, trackNum):
 		logging.info("read gonfig album: {}, track: {}".format(albumNum, trackNum))
 	except:
 		logging.warning("can\'t read config file")
-	return
+	return [albumNum, trackNum]
 
 # store the configuration file
 def write_config(albumNum, trackNum):
@@ -96,7 +96,7 @@ def write_config(albumNum, trackNum):
 	cfgfile = open(CONFIG, 'w')
 
 	# Add content to the file
-	config = configparser.ConfigParser()
+	config = ConfigParser.ConfigParser()
 	config.add_section("cdc")
 	config.set("cdc", "album", albumNum)
 	config.set("cdc", "track", trackNum)
@@ -136,7 +136,8 @@ def play_cd(change, albumNum, trackNum, play):
 			cmd("mpc pause")
 	return
 
-logging.basicConfig(filename='cdc.log',level=logging.INFO)
+#logging.basicConfig(filename='cdc.log',level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 usb_storage = False
 albumNum = 0
 trackNum = 1
@@ -160,8 +161,9 @@ while True:
 
 			cmd("mpd /home/pi/.mpd/mpd.conf") #restart mpd
 
-			read_config(albumNum, trackNum)
-#TODO
+			nums = read_config(albumNum, trackNum)
+			albumNum = nums[0]
+			trackNum = nums[1]
 			logging.debug("album: {}, track: {}".format(albumNum, trackNum))
 			play_cd(None, albumNum, trackNum, play)
 
