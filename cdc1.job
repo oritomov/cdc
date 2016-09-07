@@ -1,0 +1,36 @@
+GLOBAL
+{
+DPI = 600;
+MARGIN = 2.0;
+AA = 0;
+}
+BACKGROUND
+{
+COLOR = 1,1,1;
+}
+LAYER
+{
+GERBER = CAM\bottom_solder_mask.grb;
+COLOR = 0,0,0;
+}
+LAYER
+{
+GERBER = CAM\bottom_copper.grb;
+COLOR = 1,0,0;
+}
+LAYER
+{
+GERBER = CAM\top_copper.grb;
+COLOR = 0,1,0;
+}
+
+LAYER
+{
+GERBER = CAM\top_silk.grb;
+COLOR = 1,1,0;
+}
+LAYER
+{
+GERBER = CAM\board_outline.grb;
+COLOR = 0,0,1;
+}

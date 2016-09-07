@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--This file was written by TinyCAD Version 2.80.06 Build #626 Production Release
+If you wish to view this file go to http://tinycad.sourceforge.net to
+download the TinyCAD executable.-->
+<Library>
+	<SYMBOL>
+		<PPP>1</PPP>
+		<ORIENTATION>0</ORIENTATION>
+		<DETAILS>
+			<NAME type='0'>Arduino Nano</NAME>
+			<REF type='1'>U?</REF>
+			<DESCRIPTION>Arduino Nano</DESCRIPTION>
+		</DETAILS>
+		<TinyCAD>
+			<FONT id='1'>
+				<HEIGHT>-13</HEIGHT>
+				<WIDTH>6</WIDTH>
+				<WEIGHT>400</WEIGHT>
+				<ITALIC>0</ITALIC>
+				<UNDERLINE>0</UNDERLINE>
+				<STRIKEOUT>0</STRIKEOUT>
+				<CHARSET>0</CHARSET>
+				<FACENAME>Arial</FACENAME>
+			</FONT>
+			<RECTANGLE a='74.00000,30.00000' b='98.00000,66.00000' style='2' fill='0'/>
+			<TEXT pos='88.00000,56.00000' direction='0' font='1' color='000000'>Arduino Nano</TEXT>
+			<PIN pos='92.00000,24.00000' which='0' elec='0' direction='1' part='0' number='1' show='1' length='30' number_pos='9' centre_name='0'>Vin</PIN>
+			<PIN pos='86.00000,72.00000' which='0' elec='0' direction='0' part='0' number='2' show='1' length='30' number_pos='9' centre_name='0'>GND</PIN>
+			<PIN pos='68.00000,36.00000' which='0' elec='0' direction='3' part='0' number='3' show='1' length='30' number_pos='9' centre_name='0'>RST</PIN>
+			<PIN pos='84.00000,24.00000' which='0' elec='0' direction='1' part='0' number='4' show='1' length='30' number_pos='9' centre_name='0'>5V</PIN>
+			<PIN pos='68.00000,46.00000' which='0' elec='0' direction='3' part='0' number='5' show='1' length='30' number_pos='9' centre_name='0'>A0</PIN>
+			<PIN pos='68.00000,48.00000' which='0' elec='0' direction='3' part='0' number='6' show='1' length='30' number_pos='9' centre_name='0'>A1</PIN>
+			<PIN pos='68.00000,50.00000' which='0' elec='0' direction='3' part='0' number='7' show='1' length='30' number_pos='9' centre_name='0'>A2</PIN>
+			<PIN pos='68.00000,52.00000' which='0' elec='0' direction='3' part='0' number='8' show='1' length='30' number_pos='9' centre_name='0'>A3</PIN>
+			<PIN pos='68.00000,54.00000' which='0' elec='0' direction='3' part='0' number='9' show='1' length='30' number_pos='5' centre_name='0'>A4/SDA</PIN>
+			<PIN pos='68.00000,56.00000' which='0' elec='0' direction='3' part='0' number='10' show='1' length='30' number_pos='5' centre_name='0'>A5/SCL</PIN>
+			<PIN pos='68.00000,58.00000' which='0' elec='0' direction='3' part='0' number='11' show='1' length='30' number_pos='9' centre_name='0'>A6</PIN>
+			<PIN pos='68.00000,60.00000' which='0' elec='0' direction='3' part='0' number='12' show='1' length='30' number_pos='9' centre_name='0'>A7</PIN>
+			<PIN pos='68.00000,38.00000' which='0' elec='0' direction='3' part='0' number='13' show='1' length='30' number_pos='9' centre_name='0'>AREF</PIN>
+			<PIN pos='80.00000,24.00000' which='0' elec='0' direction='1' part='0' number='14' show='1' length='30' number_pos='9' centre_name='0'>3V3</PIN>
+			<PIN pos='104.00000,62.00000' which='0' elec='0' direction='2' part='0' number='15' show='1' length='30' number_pos='9' centre_name='0'>D13</PIN>
+			<PIN pos='104.00000,38.00000' which='0' elec='0' direction='2' part='0' number='16' show='1' length='30' number_pos='9' centre_name='0'>D1/TX</PIN>
+			<PIN pos='104.00000,36.00000' which='0' elec='0' direction='2' part='0' number='17' show='1' length='30' number_pos='9' centre_name='0'>D0/RX</PIN>
+			<PIN pos='104.00000,40.00000' which='0' elec='0' direction='2' part='0' number='20' show='1' length='30' number_pos='9' centre_name='0'>D2</PIN>
+			<PIN pos='104.00000,42.00000' which='0' elec='0' direction='2' part='0' number='21' show='1' length='30' number_pos='9' centre_name='0'>D3</PIN>
+			<PIN pos='104.00000,44.00000' which='0' elec='0' direction='2' part='0' number='22' show='1' length='30' number_pos='9' centre_name='0'>D4</PIN>
+			<PIN pos='104.00000,46.00000' which='0' elec='0' direction='2' part='0' number='23' show='1' length='30' number_pos='9' centre_name='0'>D5</PIN>
+			<PIN pos='104.00000,48.00000' which='0' elec='0' direction='2' part='0' number='24' show='1' length='30' number_pos='9' centre_name='0'>D6</PIN>
+			<PIN pos='104.00000,50.00000' which='0' elec='0' direction='2' part='0' number='25' show='1' length='30' number_pos='9' centre_name='0'>D7</PIN>
+			<PIN pos='104.00000,52.00000' which='0' elec='0' direction='2' part='0' number='26' show='1' length='30' number_pos='9' centre_name='0'>D8</PIN>
+			<PIN pos='104.00000,54.00000' which='0' elec='0' direction='2' part='0' number='27' show='1' length='30' number_pos='9' centre_name='0'>D9</PIN>
+			<PIN pos='104.00000,56.00000' which='0' elec='0' direction='2' part='0' number='28' show='1' length='30' number_pos='9' centre_name='0'>D10</PIN>
+			<PIN pos='104.00000,58.00000' which='0' elec='0' direction='2' part='0' number='29' show='1' length='30' number_pos='9' centre_name='0'>D11</PIN>
+			<PIN pos='104.00000,60.00000' which='0' elec='0' direction='2' part='0' number='30' show='1' length='30' number_pos='9' centre_name='0'>D12</PIN>
+		</TinyCAD>
+	</SYMBOL>
+</Library>
