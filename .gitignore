@@ -46,3 +46,9 @@ rpi/.project
 rpi/.pydevproject
 ~temp$$$.fpc
 cdc.dsn.autosave
+rpi/libusb1-1.0.0.tar.gz
+rpi/libusb1-1.0.0/*
+rpi/pyserial-3.1.1.tar.gz
+rpi/pyserial-3.1.1/*
+rpi/pyusb-master.zip
+CAM/*
