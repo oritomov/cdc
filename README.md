@@ -59,3 +59,5 @@
  * [PyUSB](http://sourceforge.net/projects/pyusb)
  * [MPD guide](http://crunchbang.org/forums/viewtopic.php?pid=182574)
  * [Raspberry Pi Arduino Communication](http://www.robopapa.com/Projects/RaspberryPiArduinoCommunication)
+ * [Raspberry Pi rev2 template with mounting holes](https://www.raspberrypi.org/blog/raspberry-pi-rev2-template-with-mounting-holes/)
+ * efficient 12V to 5V convertor? [TL2575](http://dangerousprototypes.com/forum/viewtopic.php?f=19&t=5040&p=49942#p49942) or [LM2575](http://www.siongboon.com/projects/2005-08-07_lm2576_dc-dc_converter/)
