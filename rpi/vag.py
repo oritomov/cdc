@@ -45,6 +45,9 @@ HU_SEEK_RWD = chr(0x58)
 # 0x53 0x2C 0xE4 0x1B beep, no cd (same as play)
 # 0x53 0x2C 0x14 0xEB
 
+#0x53 0x2C 0x38 0xC7
+HU_CDSET    = chr(0x38)
+
 # cd 1
 # 0x53 0x2C 0x0C 0xF3
 HU_CD1      = chr(0x0C)
@@ -69,9 +72,6 @@ HU_CD5      = chr(0x2C)
 # 0x53 0x2C 0xAC 0x53
 HU_CD6      = chr(0xAC)
 
-#0x53 0x2C 0x38 0xC7
-HU_CDSET    = chr(0x38)
-
 # scan (in 'sequential', 'shuffle' or 'scan' mode)
 # 0x53 0x2C 0xA0 0x5F
 HU_SCAN     = chr(0xA0)
@@ -84,6 +84,10 @@ HU_SHFFL    = chr(0x60)
 # 0x53 0x2C 0x08 0xF7
 # 0x53 0x2C 0x14 0xEB
 HU_SEQNT    = chr(0x08)
+
+# NOTE! Those are two made up commands in order to change the CDs
+HU_NEXT_CD  = chr(0x00)
+HU_PREV_CD  = chr(0xFF)
 
 global ser
 ser = None
@@ -134,6 +138,14 @@ def get_command():
 	elif (c == HU_CD1) or (c == HU_CD2) or (c == HU_CD3) or (c == HU_CD4) or (c == HU_CD5) or (c == HU_CD6):
 		if (ser.read() == HU_END_CMD) and (ser.read() == HU_CDSET):
 			return c
+	# NOTE! Those are two made up commands in order to change the CDs
+	elif (c == HU_PREV_CD) or (c == HU_NEXT_CD):
+		if (c == HU_NEXT_CD):
+			logging.info("serial next cd")
+		elif (c == HU_PREV_CD):
+			logging.info("serial prev cd")
+		return c
+		
 	#else
 	logging.warning("serial: {}".format(c))
 

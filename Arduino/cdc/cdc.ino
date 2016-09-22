@@ -13,6 +13,7 @@
 
 const int ledPin = 13; // the pin that the LED is attached to
 
+// Commands from HU via i2c
 const unsigned int HU_START         = 0x21A1;
 const unsigned int HU_STOP          = 0xA121;
 const unsigned int HU_LEFT_HOLD     = 0x0181;
@@ -23,8 +24,12 @@ const unsigned int HU_DOWN_HOLD     = 0x0383;
 const unsigned int HU_DOWN_RELEASE  = 0x8303;
 const unsigned int HU_UP_HOLD       = 0x0484;
 const unsigned int HU_UP_RELEASE    = 0x8404;
-
+// or
 const unsigned int HU_CANCEL        = 0x22A2;
+
+// NOTE! Those are two made up commands in order to change the CDs
+const char CDC_NEXT_CD              = 0x00;
+const char CDC_PREV_CD              = 0xFF;
 
 int cdc_command;
 
@@ -32,6 +37,7 @@ void setup() {
   cdc_command = 0;
   // initialize the LED pin as an output:
   /**/pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, HIGH);     // turn on the LED:
 
   Wire.begin(64);                 // join i2c bus with address #40
 
@@ -48,6 +54,7 @@ void setup() {
   Wire.onReceive(receiveEvent);   // register event
 
   Serial.begin(9600);             // start serial for output, SERIAL_8N1 data, parity, and stop bits
+  digitalWrite(ledPin, LOW);      // turn off the LED:
 }
 
 void loop() {
@@ -90,7 +97,6 @@ void check() {
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
-
   while (0 < Wire.available()) {  // loop through all but the last
     int x0 = Wire.read();         // receive byte as a character
     if (0 < Wire.available()) {
@@ -108,16 +114,18 @@ void receiveEvent(int howMany) {
           Serial.print(CDC_END_CMD);
           break;
         case HU_LEFT_HOLD:
-          Serial.println("LEFT HOLD");
+          //Serial.println("LEFT HOLD");
+          Serial.print(CDC_PREV_CD);
           break;
         case HU_LEFT_RELEASE:
-          Serial.println("LEFT RELEASE");
+          //Serial.println("LEFT RELEASE");
           break;
         case HU_RIGHT_HOLD:
-          Serial.println("RIGHT HOLD");
+          Serial.print(CDC_NEXT_CD);
+          //Serial.println("RIGHT HOLD");
           break;
         case HU_RIGHT_RELEASE:
-          Serial.println("RIGHT RELEASE");
+          //Serial.println("RIGHT RELEASE");
           break;
         case HU_DOWN_HOLD:
           Serial.print(CDC_NEXT);
@@ -138,7 +146,7 @@ void receiveEvent(int howMany) {
           Serial.println(x, HEX); // print the integer
       }
     } else {
-      Serial.println(x0, HEX);      // print the integer
+      Serial.println(x0, HEX);    // print the integer
     }
   }
 }

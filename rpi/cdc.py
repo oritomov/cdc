@@ -134,7 +134,8 @@ def play_cd(change, albumNum, trackNum, play):
 		cmd("mpc play " + str(trackNum))
 		if not play:
 			cmd("mpc pause")
-	return
+		logging.info("debug: album: {}, track: {}".format(albumNum, trackNum))
+	return [albumNum, trackNum]
 
 #logging.basicConfig(filename='cdc.log',level=logging.INFO)
 logging.basicConfig(level=logging.INFO)
@@ -164,8 +165,10 @@ while True:
 			nums = read_config(albumNum, trackNum)
 			albumNum = nums[0]
 			trackNum = nums[1]
-			logging.debug("album: {}, track: {}".format(albumNum, trackNum))
-			play_cd(None, albumNum, trackNum, play)
+			logging.debug("read from config album: {}, track: {}".format(albumNum, trackNum))
+			nums = play_cd(None, albumNum, trackNum, play)
+			albumNum = nums[0]
+			trackNum = nums[1]
 
 		if usb_storage and not find_dev(MASS_STORAGE):
 			logging.warning("missing Mass Storage")
@@ -209,22 +212,44 @@ while True:
 						break
 
 			elif cdc_cmd == hu.HU_CD1:
-				play_cd(0, albumNum, trackNum, play)
+				nums = play_cd(albumNum, 0, 1, play)
+				albumNum = nums[0]
+				trackNum = nums[1]
 
 			elif cdc_cmd == hu.HU_CD2:
-				play_cd(1, albumNum, trackNum, play)
+				nums = play_cd(albumNum, 1, 1, play)
+				albumNum = nums[0]
+				trackNum = nums[1]
 
 			elif cdc_cmd == hu.HU_CD3:
-				play_cd(2, albumNum, trackNum, play)
+				nums = play_cd(albumNum, 2, 1, play)
+				albumNum = nums[0]
+				trackNum = nums[1]
 
 			elif cdc_cmd == hu.HU_CD4:
-				play_cd(3, albumNum, trackNum, play)
+				nums = play_cd(albumNum, 3, 1, play)
+				albumNum = nums[0]
+				trackNum = nums[1]
 
 			elif cdc_cmd == hu.HU_CD5:
-				play_cd(4, albumNum, trackNum, play)
+				nums = play_cd(albumNum, 4, 1, play)
+				albumNum = nums[0]
+				trackNum = nums[1]
 
 			elif cdc_cmd == hu.HU_CD6:
-				play_cd(5, albumNum, trackNum, play)
+				nums = play_cd(albumNum, 5, 1, play)
+				albumNum = nums[0]
+				trackNum = nums[1]
+
+			elif cdc_cmd == hu.HU_NEXT_CD:
+				nums = play_cd(None, albumNum + 1, 1, play)
+				albumNum = nums[0]
+				trackNum = nums[1]
+
+			elif cdc_cmd == hu.HU_PREV_CD:
+				nums = play_cd(None, albumNum - 1, 1, play)
+				albumNum = nums[0]
+				trackNum = nums[1]
 
 			elif cdc_cmd == hu.HU_SCAN:
 				cmd("mpc update")
@@ -251,7 +276,9 @@ while True:
 				else:
 					albumNum = albumNum + 1
 					trackNum = 1
-					play_cd(None, albumNum, trackNum, play)
+					nums = play_cd(None, albumNum, trackNum, play)
+					albumNum = nums[0]
+					trackNum = nums[1]
 		#if usb_storage
 
 		sleep(0.1)
