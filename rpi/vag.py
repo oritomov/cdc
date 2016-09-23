@@ -153,5 +153,6 @@ def get_command():
 
 # frame cd#   tr#   time  time  mode  frame frame
 # 0x34, 0xBE, 0xFF, 0xFF, 0xFF, 0xFF, 0xCF, 0x3C
-def set_status(cd, track):
+def set_status(cd, track, timer):
+	logging.info("serial return: cd {}, track {}, timer {}".format(cd, track, timer))
 	return

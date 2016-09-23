@@ -184,6 +184,7 @@ while True:
 			# start play
 			if cdc_cmd == hu.HU_PLAY:
 				cmd("mpc play")
+				trackNum = None # in order to set status
 
 			# stop play
 			elif cdc_cmd == hu.HU_STOP:
@@ -264,15 +265,21 @@ while True:
 				#check playing
 				r = cmd("mpc |grep ] #")
 				if (r is not None) and (len(r) > 0):
-					r = r.split("/", 1)
-					r = r[0].split("#", 1)
+					# r="[playing] #18/37   1:53/4:50 (38%)"
+					r = r.split("/")
+					# r="[playing] #18", "37   1:53", "4:50 (38%)
+					timer = None
+					if len(r) > 2:
+						timer = r[2].split(" ")[0]
+					r = r[0].split("#")
+					# r="[playing] ", "18"
 					if len(r) > 1:
 						tr = locale.atoi(r[1])
 						#hu.set_status(albumNum, trackNum, timer)
 						if tr != trackNum:
 							trackNum = tr
 							write_config(albumNum, trackNum)
-							hu.set_status(albumNum, trackNum)
+							hu.set_status(albumNum, trackNum, timer)
 				else:
 					albumNum = albumNum + 1
 					trackNum = 1
