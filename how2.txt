@@ -20,7 +20,7 @@ http://crunchbang.org/forums/viewtopic.php?pid=182574
 
 sudo service mpd stop
 
-#todo: make it permanent
+#todo: make it permanent (at /etc/rc.local)
 sudo update-rc.d mpd disable
 sudo update-rc.d -f mpd remove
 
