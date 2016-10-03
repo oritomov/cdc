@@ -24,7 +24,8 @@
 
 ### PCB
 
-![](https://github.com/oritomov/cdc/blob/master/cdc5.png)
+![](https://github.com/oritomov/cdc/blob/master/cdc6.png)
+![](https://github.com/oritomov/cdc/blob/master/cdc6a.png)
 
 ### I2C/TWI communication betwwen HU and AI
 #### OFF
