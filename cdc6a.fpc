@@ -69,10 +69,10 @@ routing_grid_spacing: 1270000.000000
   routing_grid_item: 3.33330709MIL
   routing_grid_item: 4MIL
   routing_grid_item: 5MIL
-  routing_grid_item: 6.66551181MIL
+  routing_grid_item: 6.66547244MIL
   routing_grid_item: 10MIL
   routing_grid_item: 12.5MIL
-  routing_grid_item: 16.66551181MIL
+  routing_grid_item: 16.66547244MIL
   routing_grid_item: 20MIL
   routing_grid_item: 25MIL
   routing_grid_item: 40MIL
@@ -262,28 +262,6 @@ author: "Ivex"
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 50 25 25 0
 
-name: "Diode"
-author: "Ivex"
-  units: MIL
-  sel_rect: -47.5 -75 175 75
-  ref_text: 50 200 109 0 7
-  value_text: 50 200 9 0 7
-  centroid: 1 50 0 0
-  outline_polyline: 10 100 60
-    next_corner: 40 0 2
-    next_corner: 100 -60 2
-    next_corner: 160 0 2
-    close_polyline: 2
-  n_pins: 2
-    pin: "1" 28 0 0 0
-      top_pad: 1 75 37 37 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 75 37 37 0
-    pin: "2" 28 100 0 0
-      top_pad: 1 75 37 37 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 75 37 37 0
-
 name: "RC05"
 author: "Ivex"
 source: "DIGITAL PRINTED CIRCUIT DESIGN & DRAFTING, PAGE 408"
@@ -303,6 +281,28 @@ source: "DIGITAL PRINTED CIRCUIT DESIGN & DRAFTING, PAGE 408"
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 75 37 37 0
     pin: "2" 28 400 0 0
+      top_pad: 1 75 37 37 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 75 37 37 0
+
+name: "Diode"
+author: "Ivex"
+  units: MIL
+  sel_rect: -47.5 -75 175 75
+  ref_text: 50 200 109 0 7
+  value_text: 50 200 9 0 7
+  centroid: 1 50 0 0
+  outline_polyline: 10 100 60
+    next_corner: 40 0 2
+    next_corner: 100 -60 2
+    next_corner: 160 0 2
+    close_polyline: 2
+  n_pins: 2
+    pin: "1" 28 0 0 0
+      top_pad: 1 75 37 37 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 75 37 37 0
+    pin: "2" 28 100 0 0
       top_pad: 1 75 37 37 0
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 75 37 37 0
@@ -365,28 +365,6 @@ source: "DIGIKEY CATALOG NO. 941, PAGE 27"
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 60 30 30 0
 
-name: "Coil"
-author: "Ivex"
-  units: MIL
-  sel_rect: -95 -195 295 195
-  ref_text: 50 69 192 0 7
-  value_text: 50 69 92 0 7
-  centroid: 0 69 0 0
-  outline_polyline: 10 -80 0
-    next_corner: 100 -180 2
-    next_corner: 280 0 2
-    next_corner: 100 180 2
-    close_polyline: 2
-  n_pins: 2
-    pin: "1" 28 200 0 0
-      top_pad: 1 65 32 32 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 65 32 32 0
-    pin: "2" 28 0 0 0
-      top_pad: 1 65 32 32 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 65 32 32 0
-
 name: "5SIP100"
 author: "Ivex"
 source: "DIGIKEY CATALOG NO. 941, PAGE 27"
@@ -421,6 +399,28 @@ source: "DIGIKEY CATALOG NO. 941, PAGE 27"
       top_pad: 1 60 30 30 0
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 60 30 30 0
+
+name: "Coil"
+author: "Ivex"
+  units: MIL
+  sel_rect: -95 -195 295 195
+  ref_text: 50 69 192 0 7
+  value_text: 50 69 92 0 7
+  centroid: 0 69 0 0
+  outline_polyline: 10 -80 0
+    next_corner: 100 -180 2
+    next_corner: 280 0 2
+    next_corner: 100 180 2
+    close_polyline: 2
+  n_pins: 2
+    pin: "1" 28 200 0 0
+      top_pad: 1 65 32 32 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 65 32 32 0
+    pin: "2" 28 0 0 0
+      top_pad: 1 65 32 32 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 65 32 32 0
 
 [board]
 
@@ -496,18 +496,22 @@ net: "Vin" 4 3 0 0 0 0 1
   pin: 2 U.1
   pin: 3 R01.2
   pin: 4 H.1
-  connect: 1 3 2 1 0
+  connect: 1 3 2 2 0
     vtx: 1 2540000 15240000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 2540000 10160000 11 0 0 0 0
+    seg: 1 13 254000 0 0
+    vtx: 2 2540000 12700000 0 0 711200 355600 0
+    seg: 2 12 254000 0 0
+    vtx: 3 2540000 10160000 11 0 0 0 0
   connect: 2 2 0 1 0
     vtx: 1 2540000 10160000 11 0 0 0 0
     seg: 1 12 254000 0 0
     vtx: 2 2540000 2540000 11 0 0 0 0
-  connect: 3 3 1 1 0
+  connect: 3 3 1 2 0
     vtx: 1 2540000 15240000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 2540000 25400000 11 0 0 0 0
+    seg: 1 13 254000 0 0
+    vtx: 2 2540000 17780000 0 0 711200 355600 0
+    seg: 2 12 254000 0 0
+    vtx: 3 2540000 25400000 11 0 0 0 0
 
 net: "Vout" 3 2 0 0 0 0 1
   pin: 1 U.2
@@ -541,32 +545,28 @@ net: "GND" 6 5 0 0 0 0 1
     vtx: 1 4546600 2540000 11 0 0 0 0
     seg: 1 12 254000 0 0
     vtx: 2 10210800 2540000 11 0 0 0 0
-  connect: 4 4 0 1 0
+  connect: 4 4 0 2 0
     vtx: 1 7620000 15240000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 7620000 25400000 11 0 0 0 0
-  connect: 5 4 1 1 0
+    seg: 1 13 254000 0 0
+    vtx: 2 7620000 17780000 0 0 711200 355600 0
+    seg: 2 12 254000 0 0
+    vtx: 3 7620000 25400000 11 0 0 0 0
+  connect: 5 4 1 2 0
     vtx: 1 7620000 15240000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 10210800 2540000 11 0 0 0 0
+    seg: 1 13 254000 0 0
+    vtx: 2 7620000 12700000 0 0 711200 355600 0
+    seg: 2 12 254000 0 0
+    vtx: 3 10210800 2540000 11 0 0 0 0
 
 net: "Va" 2 1 0 0 0 0 1
   pin: 1 H.2
   pin: 2 R02.2
-  connect: 1 1 0 1 0
+  connect: 1 1 0 2 0
     vtx: 1 5080000 7620000 11 0 0 0 0
     seg: 1 12 254000 0 0
-    vtx: 2 5080000 15240000 11 0 0 0 0
-
-net: "Vb" 2 1 0 0 0 0 1
-  pin: 1 N.2
-  pin: 2 R02.1
-  connect: 1 1 0 2 0
-    vtx: 1 15240000 7620000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 15240000 27940000 0 0 711200 355600 0
+    vtx: 2 5080000 12700000 0 0 711200 355600 0
     seg: 2 13 254000 0 0
-    vtx: 3 12700000 30480000 11 0 0 0 0
+    vtx: 3 5080000 15240000 11 0 0 0 0
 
 net: "On/Off" 3 2 0 0 0 0 1
   pin: 1 R01.1
@@ -581,23 +581,37 @@ net: "On/Off" 3 2 0 0 0 0 1
     seg: 1 12 254000 0 0
     vtx: 2 12700000 10160000 11 0 0 0 0
 
+net: "Vb" 2 1 0 0 0 0 1
+  pin: 1 N.2
+  pin: 2 R02.1
+  connect: 1 1 0 2 0
+    vtx: 1 15240000 7620000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 15240000 27940000 0 0 711200 355600 0
+    seg: 2 13 254000 0 0
+    vtx: 3 12700000 30480000 11 0 0 0 0
+
 net: "5V" 4 3 0 0 0 0 1
   pin: 1 Cout.2
   pin: 2 U.4
   pin: 3 L.1
   pin: 4 H.4
-  connect: 1 3 2 1 0
+  connect: 1 3 2 2 0
     vtx: 1 10160000 15240000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 10160000 20320000 11 0 0 0 0
+    seg: 1 13 254000 0 0
+    vtx: 2 10160000 17780000 0 0 711200 355600 0
+    seg: 2 12 254000 0 0
+    vtx: 3 10160000 20320000 11 0 0 0 0
   connect: 2 2 1 1 0
     vtx: 1 10160000 20320000 11 0 0 0 0
     seg: 1 12 254000 0 0
     vtx: 2 10160000 25400000 11 0 0 0 0
-  connect: 3 3 0 1 0
+  connect: 3 3 0 2 0
     vtx: 1 10160000 15240000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 12700000 2540000 11 0 0 0 0
+    seg: 1 13 254000 0 0
+    vtx: 2 10160000 12700000 0 0 711200 355600 0
+    seg: 2 12 254000 0 0
+    vtx: 3 12700000 2540000 11 0 0 0 0
 
 [texts]
 
