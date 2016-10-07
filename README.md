@@ -57,5 +57,6 @@
 ### References
 
  * [Nick Gammon's page about I2C](http://gammon.com.au/i2c)
+ * [How To Burn a Bootloader to Clone Arduino Nano 3.0](http://www.instructables.com/id/How-To-Burn-a-Bootloader-to-Clone-Arduino-Nano-30)
  * [Raspberry Pi rev2 template with mounting holes](https://www.raspberrypi.org/blog/raspberry-pi-rev2-template-with-mounting-holes/)
  * efficient 12V to 5V convertor? [TL2575](http://dangerousprototypes.com/forum/viewtopic.php?f=19&t=5040&p=49942#p49942) or [LM2575](http://www.siongboon.com/projects/2005-08-07_lm2576_dc-dc_converter/)
