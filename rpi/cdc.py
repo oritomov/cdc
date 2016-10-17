@@ -5,10 +5,13 @@ import glob
 import io
 import locale
 import logging
+import logging.config
 import os
+import RPi.GPIO as GPIO ## Import GPIO library
 import usb.core
 import usb.util
 from time import sleep
+import time
 
 #import kbd as hu
 import vag as hu
@@ -18,6 +21,12 @@ DEV_SD_STAR = "/dev/sd*"
 USB_PATH = "/mnt/usb"
 CDC_PATH = USB_PATH + "/cdc"
 CONFIG = "cdc.ini"
+GPIO_Pin = 7
+PIN_ON_TIME = 30
+
+# create logger
+#logging.config.fileConfig('logging.conf')
+#logger = logging.getLogger('simpleExample')
 
 # check devices for a class id
 def find_dev(dev_class_id):
@@ -144,11 +153,17 @@ albumNum = 0
 trackNum = 1
 play = False
 hu.connect()
+GPIO.setmode(GPIO.BOARD) ## Use board pin numbering
+GPIO.setup(GPIO_Pin, GPIO.OUT) ## Setup GPIO Pin to OUT
+GPIO.output(GPIO_Pin, True) ## Turn on GPIO pin
+t = time.time()
 
 # read hu commands from the vag and act like a cd changer
 while True:
 	try:
-
+		if ((t + PIN_ON_TIME) <  time.time()):
+			GPIO.output(GPIO_Pin, False) ## Turn on GPIO pin
+		
 		# get hu commands
 		cdc_cmd = hu.get_command()
 
@@ -177,6 +192,7 @@ while True:
 
 		if cdc_cmd == hu.HU_PLAY:
 			play = True
+			GPIO.output(GPIO_Pin, False) ## Turn on GPIO pin
 		elif cdc_cmd == hu.HU_STOP:
 			play = False
 
