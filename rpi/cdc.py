@@ -25,8 +25,8 @@ GPIO_Pin = 7
 PIN_ON_TIME = 30
 
 # create logger
-#logging.config.fileConfig('logging.conf')
-#logger = logging.getLogger('simpleExample')
+logging.config.fileConfig('logging.cfg')
+logger = logging.getLogger('root')
 
 # check devices for a class id
 def find_dev(dev_class_id):
@@ -54,7 +54,7 @@ def mount():
 	while True:
 		sd = glob.glob(DEV_SD_STAR)
 		if len(sd) > 1:
-			logging.debug(sd)
+			logger.debug(sd)
 			source = sd[0]
 			if len(source) == 8:
 				source = sd[1]
@@ -67,7 +67,7 @@ def mount():
 	if ret < 0:
 		errno = ctypes.get_errno()
 		#raise RuntimeError
-		logging.error("Error mounting {} ({}) on {} with options '{}': {}".
+		logger.error("Error mounting {} ({}) on {} with options '{}': {}".
 			format(source, fs, target, options, os.strerror(errno)))
 	return
 
@@ -89,9 +89,9 @@ def read_config(albumNum, trackNum):
 	try:
 		albumNum = config.getint("cdc", 'album')  # Just get the value
 		trackNum = config.getint("cdc", 'track')  # You know the datatype?
-		logging.info("read gonfig album: {}, track: {}".format(albumNum, trackNum))
+		logger.info("read gonfig album: {}, track: {}".format(albumNum, trackNum))
 	except:
-		logging.warning("can\'t read config file")
+		logger.warning("can\'t read config file")
 	return [albumNum, trackNum]
 
 # store the configuration file
@@ -111,15 +111,15 @@ def write_config(albumNum, trackNum):
 	config.set("cdc", "track", trackNum)
 	config.write(cfgfile)
 	cfgfile.close()
-	logging.info("write config album: {}, track: {}".format(albumNum, trackNum))
+	logger.info("write config album: {}, track: {}".format(albumNum, trackNum))
 	return
 
 # execute a command
 def cmd(command):
-	logging.debug(command)
+	logger.debug(command)
 	res = os.popen(command).read()
 	if res is not None:
-		logging.debug(res)
+		logger.debug(res)
 	return res
 
 # load new cd-dir
@@ -127,7 +127,7 @@ def play_cd(change, albumNum, trackNum, play):
 	r = cmd("mpc ls")
 	if r is not None:
 		r = r.split("\n")
-		logging.info("found {} albums".format(len(r) - 1))
+		logger.info("found {} albums".format(len(r) - 1))
 		if albumNum > len(r) - 2: # there is an empty line at the end
 			albumNum = 0
 			trackNum = 1
@@ -135,7 +135,7 @@ def play_cd(change, albumNum, trackNum, play):
 			albumNum = len(r) - 2 # there is an empty line at the end
 			trackNum = 1
 		album = r[albumNum]
-		logging.info(album)
+		logger.info(album)
 		write_config(albumNum, trackNum)
 		cmd("mpc clear")
 		cmd("mpc listall \"" + album + "\" | mpc add")
@@ -143,11 +143,11 @@ def play_cd(change, albumNum, trackNum, play):
 		cmd("mpc play " + str(trackNum))
 		if not play:
 			cmd("mpc pause")
-		logging.info("debug: album: {}, track: {}".format(albumNum, trackNum))
+		logger.info("debug: album: {}, track: {}".format(albumNum, trackNum))
 	return [albumNum, trackNum]
 
 #logging.basicConfig(filename='cdc.log',level=logging.INFO)
-logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.INFO)
 usb_storage = False
 albumNum = 0
 trackNum = 1
@@ -170,7 +170,7 @@ while True:
 		# find a usb storage
 		if (not usb_storage) and find_dev(MASS_STORAGE):
 			usb_storage = True
-			logging.info("found Mass Storage")
+			logger.info("found Mass Storage")
 
 			if not os.path.exists(CDC_PATH):
 				mount()
@@ -180,13 +180,13 @@ while True:
 			nums = read_config(albumNum, trackNum)
 			albumNum = nums[0]
 			trackNum = nums[1]
-			logging.debug("read from config album: {}, track: {}".format(albumNum, trackNum))
+			logger.debug("read from config album: {}, track: {}".format(albumNum, trackNum))
 			nums = play_cd(None, albumNum, trackNum, play)
 			albumNum = nums[0]
 			trackNum = nums[1]
 
 		if usb_storage and not find_dev(MASS_STORAGE):
-			logging.warning("missing Mass Storage")
+			logger.warning("missing Mass Storage")
 			usb_storage = False
 			#cmd("mpc stop")
 
