@@ -61,3 +61,8 @@
  * [Raspberry Pi rev2 template with mounting holes](https://www.raspberrypi.org/blog/raspberry-pi-rev2-template-with-mounting-holes/)
  * efficient 12V to 5V convertor [LM2575](http://www.ti.com/product/LM2575)
  * DAC [PCM5102A](https://www.raspberrypi.org/forums/viewtopic.php?f=45&t=57069)
+
+### Utilities
+
+ * (TinyCAD)[https://sourceforge.net/projects/tinycad/]
+ * [FreePcb](http://www.freepcb.com/)
