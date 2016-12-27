@@ -64,5 +64,5 @@
 
 ### Utilities
 
- * (TinyCAD)[https://sourceforge.net/projects/tinycad/]
+ * [TinyCAD](https://sourceforge.net/projects/tinycad/)
  * [FreePcb](http://www.freepcb.com/)
