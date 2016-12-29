@@ -204,6 +204,31 @@ n_copper_layers: 2
 
 [footprints]
 
+name: "audio"
+  units: MIL
+  sel_rect: -115 -275 415 65
+  ref_text: 50 50 100 0 7
+  value_text: 50 50 0 0 7
+  centroid: 1 150 -50 0
+  outline_polyline: 10 -100 50
+    next_corner: -100 -260 0
+    next_corner: 400 -260 0
+    next_corner: 400 50 0
+    close_polyline: 0
+  n_pins: 3
+    pin: "1" 28 0 -200 0
+      top_pad: 1 80 40 40 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 80 40 40 0
+    pin: "2" 28 300 -200 0
+      top_pad: 1 80 40 40 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 80 40 40 0
+    pin: "3" 28 150 0 0
+      top_pad: 1 80 40 40 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 80 40 40 0
+
 name: "RAD-248"
 author: "Ivex"
 source: "DIGI-KEY CATALOG NO. 941 PAGE 161"
@@ -230,78 +255,6 @@ source: "DIGI-KEY CATALOG NO. 941 PAGE 161"
       top_pad: 1 65 32 32 0
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 65 32 32 0
-
-name: "audio"
-  units: MIL
-  sel_rect: -115 -275 415 65
-  ref_text: 50 50 100 0 7
-  value_text: 50 50 0 0 7
-  centroid: 1 150 -50 0
-  outline_polyline: 10 -100 50
-    next_corner: -100 -260 0
-    next_corner: 400 -260 0
-    next_corner: 400 50 0
-    close_polyline: 0
-  n_pins: 3
-    pin: "1" 28 0 -200 0
-      top_pad: 1 80 40 40 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 80 40 40 0
-    pin: "2" 28 300 -200 0
-      top_pad: 1 80 40 40 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 80 40 40 0
-    pin: "3" 28 150 0 0
-      top_pad: 1 80 40 40 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 80 40 40 0
-
-name: "Level shifter"
-author: "Ivex"
-source: "PRINTED CIRCUIT DESIGN METHODS PAGE 411"
-  units: MIL
-  sel_rect: -65 -65 365 765
-  ref_text: 50 70 430 0 7
-  value_text: 50 70 340 0 7
-  centroid: 0 150 50 0
-  outline_polyline: 10 -50 -50
-    next_corner: 350 -50 0
-    next_corner: 350 750 0
-    next_corner: -50 750 0
-    close_polyline: 0
-  n_pins: 8
-    pin: "1" 28 0 0 0
-      top_pad: 2 50 25 25 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 2 50 25 25 0
-    pin: "2" 28 0 700 0
-      top_pad: 1 50 25 25 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 50 25 25 0
-    pin: "3" 28 100 0 0
-      top_pad: 1 50 25 25 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 50 25 25 0
-    pin: "4" 28 100 700 0
-      top_pad: 1 50 25 25 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 50 25 25 0
-    pin: "5" 28 200 0 0
-      top_pad: 1 50 25 25 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 50 25 25 0
-    pin: "6" 28 200 700 0
-      top_pad: 1 50 25 25 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 50 25 25 0
-    pin: "7" 28 300 0 0
-      top_pad: 1 50 25 25 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 50 25 25 0
-    pin: "8" 28 300 700 0
-      top_pad: 1 50 25 25 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 50 25 25 0
 
 name: "DAC"
   units: MIL
@@ -377,6 +330,53 @@ name: "DAC"
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 50 25 25 0
 
+name: "Level shifter"
+author: "Ivex"
+source: "PRINTED CIRCUIT DESIGN METHODS PAGE 411"
+  units: MIL
+  sel_rect: -65 -65 365 765
+  ref_text: 50 70 430 0 7
+  value_text: 50 70 340 0 7
+  centroid: 0 150 50 0
+  outline_polyline: 10 -50 -50
+    next_corner: 350 -50 0
+    next_corner: 350 750 0
+    next_corner: -50 750 0
+    close_polyline: 0
+  n_pins: 8
+    pin: "1" 28 0 0 0
+      top_pad: 2 50 25 25 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 2 50 25 25 0
+    pin: "2" 28 0 700 0
+      top_pad: 1 50 25 25 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 50 25 25 0
+    pin: "3" 28 100 0 0
+      top_pad: 1 50 25 25 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 50 25 25 0
+    pin: "4" 28 100 700 0
+      top_pad: 1 50 25 25 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 50 25 25 0
+    pin: "5" 28 200 0 0
+      top_pad: 1 50 25 25 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 50 25 25 0
+    pin: "6" 28 200 700 0
+      top_pad: 1 50 25 25 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 50 25 25 0
+    pin: "7" 28 300 0 0
+      top_pad: 1 50 25 25 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 50 25 25 0
+    pin: "8" 28 300 700 0
+      top_pad: 1 50 25 25 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 50 25 25 0
+
 name: "RAD-197-dip"
 author: "Ivex"
 source: "DIGI-KEY CATALOG NO. 941 PAGE 161"
@@ -403,31 +403,6 @@ source: "DIGI-KEY CATALOG NO. 941 PAGE 161"
       top_pad: 1 65 32 32 0
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 65 32 32 0
-
-name: "DO-16"
-author: "Ivex"
-source: "JEDEC PUBLICATION NO.95 BOOK ONE PAGE 52"
-  units: MIL
-  sel_rect: -35 -35 235 35
-  ref_text: 50 100 70 0 7
-  value_text: 50 100 -30 0 7
-  centroid: 0 100 0 0
-  outline_polyline: 7 50 25
-    next_corner: 150 25 0
-    next_corner: 150 -25 0
-    next_corner: 50 -25 0
-    close_polyline: 0
-  outline_polyline: 7 125 25
-    next_corner: 125 -25 0
-  n_pins: 2
-    pin: "1" 20 0 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "2" 20 200 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
 
 name: "Transistor"
 author: "Ivex"
@@ -459,6 +434,177 @@ author: "Ivex"
       top_pad: 1 50 25 25 0
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 50 25 25 0
+
+name: "DO-16"
+author: "Ivex"
+source: "JEDEC PUBLICATION NO.95 BOOK ONE PAGE 52"
+  units: MIL
+  sel_rect: -35 -35 235 35
+  ref_text: 50 100 70 0 7
+  value_text: 50 100 -30 0 7
+  centroid: 0 100 0 0
+  outline_polyline: 7 50 25
+    next_corner: 150 25 0
+    next_corner: 150 -25 0
+    next_corner: 50 -25 0
+    close_polyline: 0
+  outline_polyline: 7 125 25
+    next_corner: 125 -25 0
+  n_pins: 2
+    pin: "1" 20 0 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "2" 20 200 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+
+name: "Arduino Nano"
+  units: MIL
+  sel_rect: -165 -65 1565 665
+  ref_text: 50 50 200 270 7
+  value_text: 50 150 200 270 7
+  centroid: 1 0 300 0
+  text: "A4 SDA" 50 720 50 270 5 0 4
+  text: "A5 SCL" 50 820 50 270 5 0 4
+  text: "Vin" 50 1420 40 270 5 0 4
+  text: "GND" 50 1320 40 270 5 0 4
+  text: "5V" 50 1120 50 270 5 0 4
+  text: "GND" 50 1125 425 270 5 0 4
+  text: "RX" 50 1325 475 270 5 0 4
+  text: "TX" 50 1425 475 270 5 0 4
+  outline_polyline: 10 -150 650
+    next_corner: 1550 650 0
+    next_corner: 1550 -50 0
+    next_corner: -150 -50 0
+    close_polyline: 0
+  outline_polyline: 10 -150 350
+    next_corner: -100 350 0
+    next_corner: -100 250 0
+    next_corner: -150 250 0
+    close_polyline: 0
+  n_pins: 30
+    pin: "1" 28 0 0 0
+      top_pad: 2 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 2 55 27 27 0
+    pin: "2" 28 100 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "3" 28 200 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "4" 28 300 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "5" 28 400 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "6" 28 500 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "7" 28 600 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "8" 28 700 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "9" 28 800 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "10" 28 900 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "11" 28 1000 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "12" 28 1100 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "13" 28 1200 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "14" 28 1300 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "15" 28 1300 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "16" 28 1200 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "17" 28 1100 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "18" 28 1000 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "19" 28 900 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "20" 28 800 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "21" 28 700 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "22" 28 600 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "23" 28 500 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "24" 28 400 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "25" 28 300 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "26" 28 200 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "27" 28 100 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "28" 28 0 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "29" 28 1400 0 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
+    pin: "30" 28 1400 600 0
+      top_pad: 1 55 27 27 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 55 27 27 0
 
 name: "Raspbery Pi B"
 author: "Ivex"
@@ -616,164 +762,6 @@ source: "PRINTED CIRCUIT DESIGN METHODS PAGE 411"
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 50 25 25 0
 
-name: "Arduino Nano"
-  units: MIL
-  sel_rect: -165 -65 1565 665
-  ref_text: 50 50 200 270 7
-  value_text: 50 150 200 270 7
-  centroid: 1 0 300 0
-  text: "A4 SDA" 50 720 50 270 5 0 4
-  text: "A5 SCL" 50 820 50 270 5 0 4
-  text: "Vin" 50 1420 40 270 5 0 4
-  text: "GND" 50 1320 40 270 5 0 4
-  text: "5V" 50 1120 50 270 5 0 4
-  text: "GND" 50 1125 425 270 5 0 4
-  text: "RX" 50 1325 475 270 5 0 4
-  text: "TX" 50 1425 475 270 5 0 4
-  outline_polyline: 10 -150 650
-    next_corner: 1550 650 0
-    next_corner: 1550 -50 0
-    next_corner: -150 -50 0
-    close_polyline: 0
-  outline_polyline: 10 -150 350
-    next_corner: -100 350 0
-    next_corner: -100 250 0
-    next_corner: -150 250 0
-    close_polyline: 0
-  n_pins: 30
-    pin: "1" 28 0 0 0
-      top_pad: 2 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 2 55 27 27 0
-    pin: "2" 28 100 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "3" 28 200 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "4" 28 300 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "5" 28 400 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "6" 28 500 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "7" 28 600 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "8" 28 700 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "9" 28 800 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "10" 28 900 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "11" 28 1000 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "12" 28 1100 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "13" 28 1200 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "14" 28 1300 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "15" 28 1300 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "16" 28 1200 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "17" 28 1100 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "18" 28 1000 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "19" 28 900 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "20" 28 800 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "21" 28 700 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "22" 28 600 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "23" 28 500 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "24" 28 400 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "25" 28 300 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "26" 28 200 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "27" 28 100 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "28" 28 0 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "29" 28 1400 0 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-    pin: "30" 28 1400 600 0
-      top_pad: 1 55 27 27 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 55 27 27 0
-
-name: "HOLE_114_RND_250"
-  units: MIL
-  sel_rect: -135 -135 135 135
-  ref_text: 50 0 0 0 5
-  value_text: 50 0 -100 0 5
-  centroid: 0 0 0 0
-  n_pins: 1
-    pin: "1" 114 0 0 90
-      top_pad: 1 250 0 0 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 250 0 0 0
-
 name: "usb a"
   units: MIL
   sel_rect: -175 -315 475 50
@@ -802,6 +790,40 @@ name: "usb a"
       top_pad: 1 130 40 40 0
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 130 40 40 0
+
+name: "HOLE_114_RND_250"
+  units: MIL
+  sel_rect: -135 -135 135 135
+  ref_text: 50 0 0 0 5
+  value_text: 50 0 -100 0 5
+  centroid: 0 0 0 0
+  n_pins: 1
+    pin: "1" 114 0 0 90
+      top_pad: 1 250 0 0 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 250 0 0 0
+
+name: "Coil"
+author: "Ivex"
+  units: MIL
+  sel_rect: -95 -195 295 195
+  ref_text: 50 69 192 0 7
+  value_text: 50 69 92 0 7
+  centroid: 0 69 0 0
+  outline_polyline: 10 -80 0
+    next_corner: 100 -180 2
+    next_corner: 280 0 2
+    next_corner: 100 180 2
+    close_polyline: 2
+  n_pins: 2
+    pin: "1" 28 200 0 0
+      top_pad: 1 65 32 32 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 65 32 32 0
+    pin: "2" 28 0 0 0
+      top_pad: 1 65 32 32 0
+      inner_pad: 0 0 0 0 0 0
+      bottom_pad: 1 65 32 32 0
 
 name: "5SIP100"
 author: "Ivex"
@@ -838,50 +860,21 @@ source: "DIGIKEY CATALOG NO. 941, PAGE 27"
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 60 30 30 0
 
-name: "Coil"
-author: "Ivex"
+name: "2PIN100"
   units: MIL
-  sel_rect: -95 -195 295 195
-  ref_text: 50 69 192 0 7
-  value_text: 50 69 92 0 7
-  centroid: 0 69 0 0
-  outline_polyline: 10 -80 0
-    next_corner: 100 -180 2
-    next_corner: 280 0 2
-    next_corner: 100 180 2
-    close_polyline: 2
-  n_pins: 2
-    pin: "1" 28 200 0 0
-      top_pad: 1 65 32 32 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 65 32 32 0
-    pin: "2" 28 0 0 0
-      top_pad: 1 65 32 32 0
-      inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 65 32 32 0
-
-name: "RL05"
-author: "Ivex"
-source: "DIGITAL PRINTED CIRCUIT DESIGN & DRAFTING, PAGE 408"
-  units: MIL
-  sel_rect: -45 -45 445 45
-  ref_text: 50 200 85 0 7
-  value_text: 50 200 -15 0 7
-  centroid: 0 200 0 0
-  outline_polyline: 7 115 35
-    next_corner: 285 35 0
-    next_corner: 285 -35 0
-    next_corner: 115 -35 0
-    close_polyline: 0
+  sel_rect: -40 -40 140 40
+  ref_text: 50 0 100 0 7
+  value_text: 50 0 40 0 7
+  centroid: 1 50 0 0
   n_pins: 2
     pin: "1" 28 0 0 0
-      top_pad: 1 75 37 37 0
+      top_pad: 2 60 30 30 0
       inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 75 37 37 0
-    pin: "2" 28 400 0 0
-      top_pad: 1 75 37 37 0
+      bottom_pad: 2 60 30 30 0
+    pin: "2" 28 100 0 0
+      top_pad: 1 60 30 30 0
       inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 75 37 37 0
+      bottom_pad: 1 60 30 30 0
 
 name: "10"
   units: MIL
@@ -936,21 +929,28 @@ name: "10"
       inner_pad: 0 0 0 0 0 0
       bottom_pad: 1 60 30 30 0
 
-name: "2PIN100"
+name: "RL05"
+author: "Ivex"
+source: "DIGITAL PRINTED CIRCUIT DESIGN & DRAFTING, PAGE 408"
   units: MIL
-  sel_rect: -40 -40 140 40
-  ref_text: 50 0 100 0 7
-  value_text: 50 0 40 0 7
-  centroid: 1 50 0 0
+  sel_rect: -45 -45 445 45
+  ref_text: 50 200 85 0 7
+  value_text: 50 200 -15 0 7
+  centroid: 0 200 0 0
+  outline_polyline: 7 115 35
+    next_corner: 285 35 0
+    next_corner: 285 -35 0
+    next_corner: 115 -35 0
+    close_polyline: 0
   n_pins: 2
     pin: "1" 28 0 0 0
-      top_pad: 2 60 30 30 0
+      top_pad: 1 75 37 37 0
       inner_pad: 0 0 0 0 0 0
-      bottom_pad: 2 60 30 30 0
-    pin: "2" 28 100 0 0
-      top_pad: 1 60 30 30 0
+      bottom_pad: 1 75 37 37 0
+    pin: "2" 28 400 0 0
+      top_pad: 1 75 37 37 0
       inner_pad: 0 0 0 0 0 0
-      bottom_pad: 1 60 30 30 0
+      bottom_pad: 1 75 37 37 0
 
 [board]
 
@@ -1111,6 +1111,14 @@ net: "D" 2 1 0 0 0 0 1
     seg: 1 12 254000 0 0
     vtx: 2 10160000 12700000 11 0 0 0 0
 
+net: "P1" 2 1 0 0 0 0 1
+  pin: 1 r1.1
+  pin: 2 p1.2
+  connect: 1 1 0 1 0
+    vtx: 1 40640000 48260000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 40640000 50800000 11 0 0 0 0
+
 net: "G" 3 2 0 0 0 0 1
   pin: 1 audio.3
   pin: 2 dac.13
@@ -1164,14 +1172,6 @@ net: "G" 3 2 0 0 0 0 1
     seg: 18 12 254000 0 0
     vtx: 19 2540000 69850000 11 0 0 0 0
 
-net: "P1" 2 1 0 0 0 0 1
-  pin: 1 r1.1
-  pin: 2 p1.2
-  connect: 1 1 0 1 0
-    vtx: 1 40640000 48260000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 40640000 50800000 11 0 0 0 0
-
 net: "P2" 2 1 0 0 0 0 1
   pin: 1 r2.1
   pin: 2 p2.2
@@ -1179,6 +1179,22 @@ net: "P2" 2 1 0 0 0 0 1
     vtx: 1 38100000 48260000 11 0 0 0 0
     seg: 1 12 254000 0 0
     vtx: 2 38100000 50800000 11 0 0 0 0
+
+net: "Bck" 2 1 0 0 0 0 1
+  pin: 1 dac.7
+  pin: 2 raspberry_pi.P3
+  connect: 1 0 1 5 0
+    vtx: 1 12700000 12700000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 11430000 13970000 0 0 0 0 0
+    seg: 2 12 254000 0 0
+    vtx: 3 10160000 13970000 0 0 0 0 0
+    seg: 3 12 254000 0 0
+    vtx: 4 8890000 12700000 0 0 0 0 0
+    seg: 4 12 254000 0 0
+    vtx: 5 8890000 11430000 0 0 0 0 0
+    seg: 5 12 254000 0 0
+    vtx: 6 7620000 10160000 11 0 0 0 0
 
 net: "Vin" 4 3 0 0 0 0 1
   pin: 1 con.10
@@ -1202,35 +1218,6 @@ net: "Vin" 4 3 0 0 0 0 1
     seg: 2 12 254000 0 0
     vtx: 3 48260000 38100000 11 0 0 0 0
 
-net: "Bck" 2 1 0 0 0 0 1
-  pin: 1 dac.7
-  pin: 2 raspberry_pi.P3
-  connect: 1 0 1 5 0
-    vtx: 1 12700000 12700000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 11430000 13970000 0 0 0 0 0
-    seg: 2 12 254000 0 0
-    vtx: 3 10160000 13970000 0 0 0 0 0
-    seg: 3 12 254000 0 0
-    vtx: 4 8890000 12700000 0 0 0 0 0
-    seg: 4 12 254000 0 0
-    vtx: 5 8890000 11430000 0 0 0 0 0
-    seg: 5 12 254000 0 0
-    vtx: 6 7620000 10160000 11 0 0 0 0
-
-net: "Vout" 3 2 0 0 0 0 1
-  pin: 1 i.2
-  pin: 2 u.2
-  pin: 3 d.2
-  connect: 1 2 0 1 0
-    vtx: 1 45720000 20320000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 45720000 15240000 11 0 0 0 0
-  connect: 2 1 0 1 0
-    vtx: 1 45720000 7620000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 45720000 15240000 11 0 0 0 0
-
 net: "SCL" 3 2 0 0 0 0 1
   pin: 1 arduino_nano.9
   pin: 2 r2.2
@@ -1251,6 +1238,19 @@ net: "SCL" 3 2 0 0 0 0 1
     vtx: 3 39370000 59690000 0 0 0 0 0
     seg: 3 12 254000 0 0
     vtx: 4 38100000 60960000 11 0 0 0 0
+
+net: "Vout" 3 2 0 0 0 0 1
+  pin: 1 i.2
+  pin: 2 u.2
+  pin: 3 d.2
+  connect: 1 2 0 1 0
+    vtx: 1 45720000 20320000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 45720000 15240000 11 0 0 0 0
+  connect: 2 1 0 1 0
+    vtx: 1 45720000 7620000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 45720000 15240000 11 0 0 0 0
 
 net: "L" 3 2 0 0 0 0 1
   pin: 1 audio.1
@@ -1281,7 +1281,7 @@ net: "L" 3 2 0 0 0 0 1
     seg: 5 12 254000 0 0
     vtx: 6 7620000 66040000 11 0 0 0 0
 
-net: "Gnd" 11 9 0 0 0 0 1
+net: "Gnd" 13 10 0 0 0 0 1
   pin: 1 ls.3
   pin: 2 usb.2
   pin: 3 arduino_nano.14
@@ -1293,6 +1293,8 @@ net: "Gnd" 11 9 0 0 0 0 1
   pin: 9 d.1
   pin: 10 dac.2
   pin: 11 raspberry_pi.P8
+  pin: 12 raspberry_pi.P7
+  pin: 13 ls.4
   connect: 1 1 0 2 0
     vtx: 1 27940000 10160000 11 0 0 0 0
     seg: 1 12 254000 0 0
@@ -1343,12 +1345,34 @@ net: "Gnd" 11 9 0 0 0 0 1
     vtx: 3 35560000 10160000 0 0 0 0 0
     seg: 3 12 254000 0 0
     vtx: 4 27940000 10160000 11 0 0 0 0
-  connect: 9 10 9 2 0
+  connect: 9 10 9 3 0
     vtx: 1 10160000 15240000 11 0 0 0 0
     seg: 1 12 254000 0 0
-    vtx: 2 10160000 22860000 0 0 0 0 0
+    vtx: 2 11430000 16510000 0 0 0 0 0
     seg: 2 12 254000 0 0
-    vtx: 3 12700000 25400000 11 0 0 0 0
+    vtx: 3 11430000 24130000 0 0 0 0 0
+    seg: 3 12 254000 0 0
+    vtx: 4 12700000 25400000 11 0 0 0 0
+  connect: 10 11 12 3 0
+    vtx: 1 7620000 15240000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 8890000 16510000 0 0 0 0 0
+    seg: 2 12 254000 0 0
+    vtx: 3 8890000 29210000 0 0 0 0 0
+    seg: 3 12 254000 0 0
+    vtx: 4 15240000 35560000 11 0 0 0 0
+
+net: "Va" 2 1 0 0 0 0 1
+  pin: 1 con.7
+  pin: 2 r4.1
+  connect: 1 1 0 3 0
+    vtx: 1 53340000 33020000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 54610000 34290000 0 0 0 0 0
+    seg: 2 12 254000 0 0
+    vtx: 3 54610000 43180000 0 0 0 0 0
+    seg: 3 12 254000 0 0
+    vtx: 4 53340000 44450000 11 0 0 0 0
 
 net: "RX3" 2 1 0 0 0 0 1
   pin: 1 ls.8
@@ -1365,60 +1389,6 @@ net: "RX3" 2 1 0 0 0 0 1
     vtx: 5 6350000 31750000 0 0 0 0 0
     seg: 5 12 254000 0 0
     vtx: 6 15240000 40640000 11 0 0 0 0
-
-net: "Va" 2 1 0 0 0 0 1
-  pin: 1 con.7
-  pin: 2 r4.1
-  connect: 1 1 0 3 0
-    vtx: 1 53340000 33020000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 54610000 34290000 0 0 0 0 0
-    seg: 2 12 254000 0 0
-    vtx: 3 54610000 43180000 0 0 0 0 0
-    seg: 3 12 254000 0 0
-    vtx: 4 53340000 44450000 11 0 0 0 0
-
-net: "Vb" 2 1 0 0 0 0 1
-  pin: 1 t.2
-  pin: 2 r4.2
-  connect: 1 1 0 1 0
-    vtx: 1 53340000 22860000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 50800000 22860000 11 0 0 0 0
-
-net: "On/Off" 3 2 0 0 0 0 1
-  pin: 1 r3.2
-  pin: 2 u.5
-  pin: 3 t.1
-  connect: 1 1 0 1 0
-    vtx: 1 53340000 7620000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 53340000 10160000 11 0 0 0 0
-  connect: 2 2 0 2 0
-    vtx: 1 50800000 20320000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 53340000 17780000 0 0 0 0 0
-    seg: 2 12 254000 0 0
-    vtx: 3 53340000 10160000 11 0 0 0 0
-
-net: "SDA" 3 2 0 0 0 0 1
-  pin: 1 arduino_nano.8
-  pin: 2 r1.2
-  pin: 3 con.2
-  connect: 1 1 0 3 0
-    vtx: 1 40640000 60960000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 34290000 67310000 0 0 0 0 0
-    seg: 2 12 254000 0 0
-    vtx: 3 19050000 67310000 0 0 0 0 0
-    seg: 3 12 254000 0 0
-    vtx: 4 17780000 66040000 11 0 0 0 0
-  connect: 2 2 1 2 0
-    vtx: 1 48260000 63500000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 43180000 63500000 0 0 0 0 0
-    seg: 2 12 254000 0 0
-    vtx: 3 40640000 60960000 11 0 0 0 0
 
 net: "P" 4 3 0 0 0 0 1
   pin: 1 arduino_nano.12
@@ -1448,6 +1418,56 @@ net: "P" 4 3 0 0 0 0 1
     seg: 4 12 254000 0 0
     vtx: 5 35560000 45720000 0 0 0 0 21425
 
+net: "SDA" 3 2 0 0 0 0 1
+  pin: 1 arduino_nano.8
+  pin: 2 r1.2
+  pin: 3 con.2
+  connect: 1 1 0 3 0
+    vtx: 1 40640000 60960000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 34290000 67310000 0 0 0 0 0
+    seg: 2 12 254000 0 0
+    vtx: 3 19050000 67310000 0 0 0 0 0
+    seg: 3 12 254000 0 0
+    vtx: 4 17780000 66040000 11 0 0 0 0
+  connect: 2 2 1 2 0
+    vtx: 1 48260000 63500000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 43180000 63500000 0 0 0 0 0
+    seg: 2 12 254000 0 0
+    vtx: 3 40640000 60960000 11 0 0 0 0
+
+net: "On/Off" 3 2 0 0 0 0 1
+  pin: 1 r3.2
+  pin: 2 u.5
+  pin: 3 t.1
+  connect: 1 1 0 1 0
+    vtx: 1 53340000 7620000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 53340000 10160000 11 0 0 0 0
+  connect: 2 2 0 2 0
+    vtx: 1 50800000 20320000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 53340000 17780000 0 0 0 0 0
+    seg: 2 12 254000 0 0
+    vtx: 3 53340000 10160000 11 0 0 0 0
+
+net: "Vb" 2 1 0 0 0 0 1
+  pin: 1 t.2
+  pin: 2 r4.2
+  connect: 1 1 0 1 0
+    vtx: 1 53340000 22860000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 50800000 22860000 11 0 0 0 0
+
+net: "RX5" 2 1 0 0 0 0 1
+  pin: 1 arduino_nano.30
+  pin: 2 ls.7
+  connect: 1 1 0 1 0
+    vtx: 1 33020000 40640000 11 0 0 0 0
+    seg: 1 12 254000 0 0
+    vtx: 2 33020000 48260000 11 0 0 0 0
+
 net: "TX3" 2 1 0 0 0 0 1
   pin: 1 raspberry_pi.8
   pin: 2 ls.6
@@ -1463,14 +1483,6 @@ net: "TX3" 2 1 0 0 0 0 1
     vtx: 5 3810000 11430000 0 0 0 0 0
     seg: 5 12 254000 0 0
     vtx: 6 2540000 10160000 11 0 0 0 0
-
-net: "RX5" 2 1 0 0 0 0 1
-  pin: 1 arduino_nano.30
-  pin: 2 ls.7
-  connect: 1 1 0 1 0
-    vtx: 1 33020000 40640000 11 0 0 0 0
-    seg: 1 12 254000 0 0
-    vtx: 2 33020000 48260000 11 0 0 0 0
 
 net: "R" 3 3 0 0 0 0 1
   pin: 1 audio.2
@@ -1521,21 +1533,13 @@ net: "TX5" 2 1 0 0 0 0 1
     seg: 3 12 254000 0 0
     vtx: 4 33020000 50800000 11 0 0 0 0
 
-net: "3V3" 2 1 0 0 0 0 1
-  pin: 1 ls.2
-  pin: 2 raspberry_pi.P1
-  connect: 1 1 0 5 0
-    vtx: 1 7620000 7620000 11 0 0 0 0
+net: "Lck" 2 1 0 0 0 0 1
+  pin: 1 dac.9
+  pin: 2 raspberry_pi.P4
+  connect: 1 0 1 1 0
+    vtx: 1 12700000 7620000 11 0 0 0 0
     seg: 1 12 254000 0 0
-    vtx: 2 6350000 8890000 0 0 0 0 0
-    seg: 2 12 254000 0 0
-    vtx: 3 6350000 12700000 0 0 0 0 0
-    seg: 3 12 254000 0 0
-    vtx: 4 8890000 15240000 0 0 0 0 0
-    seg: 4 12 254000 0 0
-    vtx: 5 8890000 26670000 0 0 0 0 0
-    seg: 5 12 254000 0 0
-    vtx: 6 15240000 33020000 11 0 0 0 0
+    vtx: 2 10160000 10160000 11 0 0 0 0
 
 net: "5V" 6 5 0 0 0 0 1
   pin: 1 usb.1
@@ -1577,13 +1581,21 @@ net: "5V" 6 5 0 0 0 0 1
     seg: 1 12 254000 0 0
     vtx: 2 17780000 27940000 0 0 0 0 2170
 
-net: "Lck" 2 1 0 0 0 0 1
-  pin: 1 dac.9
-  pin: 2 raspberry_pi.P4
-  connect: 1 0 1 1 0
-    vtx: 1 12700000 7620000 11 0 0 0 0
+net: "3V3" 2 1 0 0 0 0 1
+  pin: 1 ls.2
+  pin: 2 raspberry_pi.1
+  connect: 1 1 0 5 0
+    vtx: 1 5080000 2540000 11 0 0 0 0
     seg: 1 12 254000 0 0
-    vtx: 2 10160000 10160000 11 0 0 0 0
+    vtx: 2 6350000 3810000 0 0 0 0 0
+    seg: 2 12 254000 0 0
+    vtx: 3 6350000 12700000 0 0 0 0 0
+    seg: 3 12 254000 0 0
+    vtx: 4 10160000 16510000 0 0 0 0 0
+    seg: 4 12 254000 0 0
+    vtx: 5 10160000 27940000 0 0 0 0 0
+    seg: 5 12 254000 0 0
+    vtx: 6 15240000 33020000 11 0 0 0 0
 
 [texts]
 
