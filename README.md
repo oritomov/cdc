@@ -27,6 +27,10 @@
 ![](https://github.com/oritomov/cdc/blob/master/cdc6.png)
 ![](https://github.com/oritomov/cdc/blob/master/cdc6a.png)
 
+### Beta
+
+![](https://github.com/oritomov/cdc/blob/master/DSC_0577.JPG)
+
 ### I2C/TWI communication betwwen HU and AI
 #### OFF
 
