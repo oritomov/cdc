@@ -29,7 +29,7 @@
 
 ### Beta
 
-![](https://github.com/oritomov/cdc/blob/master/DSC_0577.JPG)
+![](https://github.com/oritomov/cdc/blob/master/DSC_0578.JPG)
 
 ### I2C/TWI communication betwwen HU and AI
 #### OFF
