@@ -12,6 +12,7 @@
 #include "vag.h"
 
 const int ledPin = 13; // the pin that the LED is attached to
+const int readyPin = 12; // the pin that will off SDA ground
 
 // Commands from HU via i2c
 const unsigned int HU_START         = 0x21A1;
@@ -35,6 +36,9 @@ int cdc_command;
 
 void setup() {
   cdc_command = 0;
+  // setting off SDA ground:
+  /**/pinMode(readyPin, OUTPUT);
+  digitalWrite(readyPin, HIGH);     // turn on the LED:
   // initialize the LED pin as an output:
   /**/pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, HIGH);     // turn on the LED:
