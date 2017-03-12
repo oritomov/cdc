@@ -25,6 +25,8 @@ const unsigned int HU_DOWN_HOLD     = 0x0383;
 const unsigned int HU_DOWN_RELEASE  = 0x8303;
 const unsigned int HU_UP_HOLD       = 0x0484;
 const unsigned int HU_UP_RELEASE    = 0x8404;
+// and
+const unsigned int HU_NO_IDEA       = 0x9212; // probably instead of 'stop'
 // or
 const unsigned int HU_CANCEL        = 0x22A2;
 
@@ -68,9 +70,10 @@ void loop() {
 
 void check() {
   if (cdc_command != 0) {
+    Serial.println("Checking...");
     digitalWrite(ledPin, HIGH);   // turn on the LED:
-    for (int j = 0; j < 18; j++) {
-      delay(100);
+    for (int j = 0; j < 10; j++) {
+      delay(1000);
 
       byte count = 0;
       for (byte i = 8; i < 120; i++)
@@ -84,13 +87,12 @@ void check() {
           Serial.print (i, HEX);
           Serial.println (")");
           count++;
-          //delay (1);            // maybe unneeded?
+          delay (100);            // maybe unneeded?
         } // end of good response
       } // end of for loop
-      //Serial.println ("Done.");
-      //Serial.print ("Found ");
-      //Serial.print (count, DEC);
-      //Serial.println (" device(s).");
+      Serial.print ("Found ");
+      Serial.print (count, DEC);
+      Serial.println (" device(s).");
     }
     Serial.println ("Done.");
     cdc_command = 0;
@@ -143,13 +145,20 @@ void receiveEvent(int howMany) {
         case HU_UP_RELEASE:
           //Serial.println("UP RELEASE");
           break;
+        case HU_NO_IDEA:
+          Serial.print("no idea "); //unknow
+          Serial.println(HU_NO_IDEA);
+          break;
         case HU_CANCEL:
+          Serial.print("cancel "); //unknow
           Serial.println(HU_CANCEL);
           break;
         default:
+          Serial.print("??"); //unknow
           Serial.println(x, HEX); // print the integer
       }
     } else {
+      Serial.print("?"); //unknow
       Serial.println(x0, HEX);    // print the integer
     }
   }
