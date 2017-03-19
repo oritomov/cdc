@@ -24,7 +24,8 @@
 
 ### PCB
 
-![](https://github.com/oritomov/cdc/blob/master/cdc10.png)
+![](https://github.com/oritomov/cdc/blob/master/cdc10_top.png)
+![](https://github.com/oritomov/cdc/blob/master/cdc10_bottom.png)
 
 ### Beta
 
