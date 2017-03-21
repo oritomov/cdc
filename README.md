@@ -3,38 +3,38 @@
 ### Hardware
 #### Audi Gamma CC Bose - Head Unit (HU)
 
-![](https://github.com/oritomov/cdc/blob/master/Audo%20Gamma%20CC%20Bose.jpg)
+![](https://github.com/oritomov/cdc/etc/img/blob/master/Audo%20Gamma%20CC%20Bose.jpg)
 
 #### Audi Interface 4A0 035 239, Blaupunkt 7 607 765 082 (AI) 
 
-![](https://github.com/oritomov/cdc/blob/master/4A0%20035%20239.jpg)
-![](https://github.com/oritomov/cdc/blob/master/Blaupunkt%207%20607%20765%20082.jpg)
+![](https://github.com/oritomov/cdc/etc/img/blob/master/4A0%20035%20239.jpg)
+![](https://github.com/oritomov/cdc/etc/img/blob/master/Blaupunkt%207%20607%20765%20082.jpg)
 
 #### CD Changer (CDC)
 
-![](https://github.com/oritomov/cdc/blob/master/CD_changer.jpg)
+![](https://github.com/oritomov/cdc/etc/img/blob/master/CD_changer.jpg)
 
 ### Emulator
 
-![](https://github.com/oritomov/cdc/blob/master/emulator.png)
+![](https://github.com/oritomov/cdc/etc/img/blob/master/emulator.png)
 
 ### Circuit
 
-![](https://github.com/oritomov/cdc/blob/master/circuit.png)
+![](https://github.com/oritomov/cdc/etc/cir/blob/master/circuit.png)
 
 ### PCB
 
-![](https://github.com/oritomov/cdc/blob/master/cdc10_top.png)
-![](https://github.com/oritomov/cdc/blob/master/cdc10_bottom.png)
+![](https://github.com/oritomov/cdc/etc/pcb/blob/master/cdc10_top.png)
+![](https://github.com/oritomov/cdc/etc/pcb/blob/master/cdc10_bottom.png)
 
 ### Beta
 
-![](https://github.com/oritomov/cdc/blob/master/DSC_0578.JPG)
+![](https://github.com/oritomov/cdc/etc/img/blob/master/DSC_0578.JPG)
 
 ### I2C/TWI communication betwwen HU and AI
 #### OFF
 
-![](https://github.com/oritomov/cdc/blob/master/off.png)
+![](https://github.com/oritomov/cdc/etc/img/blob/master/off.png)
 
  * 1000000 (7bit addrtess 0x40)
  * 0 (Write)
@@ -47,7 +47,7 @@
  
 #### ON
  
-![](https://github.com/oritomov/cdc/blob/master/on.png)
+![](https://github.com/oritomov/cdc/etc/img/blob/master/on.png)
 
  * 1000000 (7bit addrtess 0x40)
  * 0 (Write)
