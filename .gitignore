@@ -42,13 +42,13 @@ Network Trash Folder
 Temporary Items
 .apdisk
 *.bak
-rpi/.project
-rpi/.pydevproject
+src/rpi/.project
+src/rpi/.pydevproject
 ~temp$$$.fpc
 cdc.dsn.autosave
-rpi/libusb1-1.0.0.tar.gz
-rpi/libusb1-1.0.0/*
-rpi/pyserial-3.1.1.tar.gz
-rpi/pyserial-3.1.1/*
-rpi/pyusb-master.zip
-CAM/*
+src/rpi/libusb1-1.0.0.tar.gz
+src/rpi/libusb1-1.0.0/*
+src/rpi/pyserial-3.1.1.tar.gz
+src/rpi/pyserial-3.1.1/*
+src/rpi/pyusb-master.zip
+etc/pcb/CAM/*
