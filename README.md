@@ -60,8 +60,8 @@
 
 ### References
 
+ * [VAG CDC Faker](http://dev.shyd.de/2013/09/avr-raspberry-pi-vw-beta-vag-cdc-faker/)
  * [Nick Gammon's page about I2C](http://gammon.com.au/i2c)
- * [How To Burn a Bootloader to Clone Arduino Nano 3.0](http://www.instructables.com/id/How-To-Burn-a-Bootloader-to-Clone-Arduino-Nano-30)
  * [Raspberry Pi rev2 template with mounting holes](https://www.raspberrypi.org/blog/raspberry-pi-rev2-template-with-mounting-holes/)
  * efficient 12V to 5V convertor [LM2575](http://www.ti.com/product/LM2575)
  * DAC [PCM5102A](https://www.raspberrypi.org/forums/viewtopic.php?f=45&t=57069)  ([Beyond ES9023 PCM1794](https://www.google.bg/search?q=Beyond+ES9023+PCM1794))
