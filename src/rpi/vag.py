@@ -155,4 +155,7 @@ def get_command():
 # 0x34, 0xBE, 0xFF, 0xFF, 0xFF, 0xFF, 0xCF, 0x3C
 def set_status(cd, track, timer):
 	logging.info("serial return: cd {}, track {}, timer {}".format(cd, track, timer))
+	# just a byte at the moment
+	byte = chr(0x34)
+	ser.write(byte)
 	return

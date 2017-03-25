@@ -66,6 +66,26 @@ void setup() {
 void loop() {
   delay(100);
   //check();
+  response();
+}
+
+void response() {
+  if (cdc_command != 0) {
+    if (cdc_command == HU_START) {
+      // when started
+      if (Serial.available() > 0) {
+        // read the incoming byte:
+        int incomingByte = Serial.read();
+        cdc_command = 0;
+      } else {
+        // wait for response
+        delay(3000);
+        // trying again
+        Serial.print(CDC_PLAY);
+        Serial.print(CDC_END_CMD);
+      }
+    }
+  }
 }
 
 void check() {
@@ -112,12 +132,13 @@ void receiveEvent(int howMany) {
         case HU_START:
           Serial.print(CDC_PLAY);
           Serial.print(CDC_END_CMD);
-          cdc_command = 1;
-          // TODO: answer
+          // response
+          cdc_command = HU_START;
           break;
         case HU_STOP:
           Serial.print(CDC_STOP);
           Serial.print(CDC_END_CMD);
+          cdc_command = 0;
           break;
         case HU_LEFT_HOLD:
           //Serial.println("LEFT HOLD");
