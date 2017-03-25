@@ -207,78 +207,78 @@ while True:
 			elif cdc_cmd == hu.HU_STOP:
 				cmd("mpc pause")
 
-			# next
-			elif cdc_cmd == hu.HU_NEXT:
-				cmd("mpc next")
-
-			# prev
-			elif cdc_cmd == hu.HU_PREV:
-				cmd("mpc prev")
-
-			# next
-			elif cdc_cmd == hu.HU_SEEK_FWD:
-				while(1):
-					cmd("mpc seek +00:00:10")
-					if hu.get_command() is not None:
-						break
-
-			# prev
-			elif cdc_cmd == hu.HU_SEEK_RWD:
-				while(1):
-					cmd("mpc seek -00:00:10")
-					if hu.get_command() is not None:
-						break
-
-			elif cdc_cmd == hu.HU_CD1:
-				nums = play_cd(albumNum, 0, 1, play)
-				albumNum = nums[0]
-				trackNum = nums[1]
-
-			elif cdc_cmd == hu.HU_CD2:
-				nums = play_cd(albumNum, 1, 1, play)
-				albumNum = nums[0]
-				trackNum = nums[1]
-
-			elif cdc_cmd == hu.HU_CD3:
-				nums = play_cd(albumNum, 2, 1, play)
-				albumNum = nums[0]
-				trackNum = nums[1]
-
-			elif cdc_cmd == hu.HU_CD4:
-				nums = play_cd(albumNum, 3, 1, play)
-				albumNum = nums[0]
-				trackNum = nums[1]
-
-			elif cdc_cmd == hu.HU_CD5:
-				nums = play_cd(albumNum, 4, 1, play)
-				albumNum = nums[0]
-				trackNum = nums[1]
-
-			elif cdc_cmd == hu.HU_CD6:
-				nums = play_cd(albumNum, 5, 1, play)
-				albumNum = nums[0]
-				trackNum = nums[1]
-
-			elif cdc_cmd == hu.HU_NEXT_CD:
-				nums = play_cd(None, albumNum + 1, 1, play)
-				albumNum = nums[0]
-				trackNum = nums[1]
-
-			elif cdc_cmd == hu.HU_PREV_CD:
-				nums = play_cd(None, albumNum - 1, 1, play)
-				albumNum = nums[0]
-				trackNum = nums[1]
-
-			elif cdc_cmd == hu.HU_SCAN:
-				cmd("mpc update")
-
-			elif cdc_cmd == hu.HU_SHFFL:
-				cmd("mpc random on")
-
-			elif cdc_cmd == hu.HU_SEQNT:
-				cmd("mpc random off")
-
 			if play:
+				# next
+				if cdc_cmd == hu.HU_NEXT:
+					cmd("mpc next")
+
+				# prev
+				elif cdc_cmd == hu.HU_PREV:
+					cmd("mpc prev")
+
+				# next
+				elif cdc_cmd == hu.HU_SEEK_FWD:
+					while(1):
+						cmd("mpc seek +00:00:10")
+						if hu.get_command() is not None:
+							break
+
+				# prev
+				elif cdc_cmd == hu.HU_SEEK_RWD:
+					while(1):
+						cmd("mpc seek -00:00:10")
+						if hu.get_command() is not None:
+							break
+
+				elif cdc_cmd == hu.HU_CD1:
+					nums = play_cd(albumNum, 0, 1, play)
+					albumNum = nums[0]
+					trackNum = nums[1]
+
+				elif cdc_cmd == hu.HU_CD2:
+					nums = play_cd(albumNum, 1, 1, play)
+					albumNum = nums[0]
+					trackNum = nums[1]
+
+				elif cdc_cmd == hu.HU_CD3:
+					nums = play_cd(albumNum, 2, 1, play)
+					albumNum = nums[0]
+					trackNum = nums[1]
+
+				elif cdc_cmd == hu.HU_CD4:
+					nums = play_cd(albumNum, 3, 1, play)
+					albumNum = nums[0]
+					trackNum = nums[1]
+
+				elif cdc_cmd == hu.HU_CD5:
+					nums = play_cd(albumNum, 4, 1, play)
+					albumNum = nums[0]
+					trackNum = nums[1]
+
+				elif cdc_cmd == hu.HU_CD6:
+					nums = play_cd(albumNum, 5, 1, play)
+					albumNum = nums[0]
+					trackNum = nums[1]
+
+				elif cdc_cmd == hu.HU_NEXT_CD:
+					nums = play_cd(None, albumNum + 1, 1, play)
+					albumNum = nums[0]
+					trackNum = nums[1]
+
+				elif cdc_cmd == hu.HU_PREV_CD:
+					nums = play_cd(None, albumNum - 1, 1, play)
+					albumNum = nums[0]
+					trackNum = nums[1]
+
+				elif cdc_cmd == hu.HU_SCAN:
+					cmd("mpc update")
+
+				elif cdc_cmd == hu.HU_SHFFL:
+					cmd("mpc random on")
+
+				elif cdc_cmd == hu.HU_SEQNT:
+					cmd("mpc random off")
+
 				#check playing
 				r = cmd("mpc |grep ] #")
 				if (r is not None) and (len(r) > 0):
@@ -303,6 +303,7 @@ while True:
 					nums = play_cd(None, albumNum, trackNum, play)
 					albumNum = nums[0]
 					trackNum = nums[1]
+			#if play
 		#if usb_storage
 
 		sleep(0.1)
