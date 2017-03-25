@@ -72,23 +72,28 @@ def mount():
 	return
 
 # load the configuration file
+# fix it
 def read_config(albumNum, trackNum):
-	with open(CONFIG) as file:
+	with open(CONFIG, "r") as file:
 		cfgfile = file.read()
 	config = ConfigParser.RawConfigParser(allow_no_value=True)
 	config.readfp(io.BytesIO(cfgfile))
 
 	# list all contents
-	#print("List all contents")
+	#logger.info("List all contents")
+	#logger.info("Sections: {}".format(config.sections()))
 	#for section in config.sections():
-	#	print("Section: %s" % section)
-	#	for options in config.options(section):
-	#		print("x %s:::%s:::%s" % (options,
-	#								config.get(section, options),
-	#								str(type(options))))
+	#	logger.info("Section: {}".format(section))
+	#	logger.info("Options: {}".format(config.options(section)))
+	#	for option in config.options(section):
+	#		val = config.get(section, option)
+	#		if val == -1:
+	#			logger.warning("skip: {}".format(option))
+	#		logger.info("read config: {} {} {}".format(section, option, val))
+
 	try:
-		albumNum = config.getint("cdc", 'album')  # Just get the value
-		trackNum = config.getint("cdc", 'track')  # You know the datatype?
+		albumNum = config.getint("cdc", "album")
+		trackNum = config.getint("cdc", "track")
 		logger.info("read gonfig album: {}, track: {}".format(albumNum, trackNum))
 	except:
 		logger.warning("can\'t read config file")
@@ -96,21 +101,17 @@ def read_config(albumNum, trackNum):
 
 # store the configuration file
 def write_config(albumNum, trackNum):
-	# Check if there is already a configurtion file
-	if os.path.isfile(CONFIG):
-		if os.path.isfile(CONFIG + ".bak"):
-			os.remove(CONFIG + ".bak")
-		os.rename(CONFIG, CONFIG + ".bak")
-	# Create the configuration file as it doesn't exist yet
-	cfgfile = open(CONFIG, 'w')
 
 	# Add content to the file
 	config = ConfigParser.ConfigParser()
 	config.add_section("cdc")
 	config.set("cdc", "album", albumNum)
 	config.set("cdc", "track", trackNum)
-	config.write(cfgfile)
-	cfgfile.close()
+
+	# Create the configuration file as it doesn't exist yet
+	with open(CONFIG, "w") as file:
+		config.write(file)
+
 	logger.info("write config album: {}, track: {}".format(albumNum, trackNum))
 	return
 
