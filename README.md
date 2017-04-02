@@ -1,5 +1,27 @@
 # Emulator (Arduino & Raspbery Pi) for<br>Audi Gamma CC Bose CD Changer 
 
+### Preface
+
+This isn't my biggest project, but it is most compicated and ralated to too much unknown things my project. It is my first Python code and my first Arduno project. 
+
+Audi Gamma CC Bose (HU) is my auto cassete player. It has ability to rule a CD Cahnger, not directly, but via specific Audi Interface (AI).
+
+Even dought comunication with VAG's CD Changers is prety well documentad, I couldn't find any informatioan about comunication between my HU and the AI. I found out how the HU trys to comunicate to the AI, but I have not idea what the AI should reply. I will be verry apritiate if some kind person records the comunication and send it to me. This will be great help in order my emulator to shows played track and album number. At the moment it works without this.
+
+The HU sends I2C/TWI signals to AI on 950 Hz (or sort of) to the address 0x40. ON is two bytes 0xA1 and 0x21, OFF is same bytes back order. Other signals what I riddle are from buttons '^', 'v', '>>' and '<<'. There is two more signals, one when HU doesnt like comunication - I called "Cansel", and one more, but I have no idea when and why HU sends it.
+
+I implement the emulator from Arduino to replace the AI and Raspbery Pi to replace the CD Changer. I use separate DAC because those build in RPi is ... noy good enough.
+
+Comunication between the Arduino and RPi is serial UART simular (but not same) to standard CDC communication.
+
+Comunication between the RPi and the DAC what I choise, indeed PCB5102A, is via I2S.
+
+I've made a special PCB to hold everything. The connector to the HU is hand made 10 pins simular to common ISO connector.
+
+Power is based on LM2575-5.
+
+Note: There is a trick. First hand shake of the HU comes around 0.4 seconds after HU power on. The Arduino takes more time for boot. Thats why I add two NPN transistors - one in order to lower akcnolege bit of I2C/TWI comunication, and anoter one to cancel this after Arduino's boot.
+
 ### Hardware
 #### Audi Gamma CC Bose - Head Unit (HU)
 
