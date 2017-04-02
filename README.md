@@ -49,14 +49,13 @@
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/cir/circuit.png)
 
-### PCB
-
-![](https://github.com/oritomov/cdc/blob/master/etc/pcb/cdc11.png)
-
-
 ### Beta
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/DSC_0578.JPG)
+
+### PCB
+
+![](https://github.com/oritomov/cdc/blob/master/etc/pcb/cdc11.png)
 
 ### Release Candidate #1
 
