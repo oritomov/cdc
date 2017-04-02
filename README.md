@@ -14,28 +14,6 @@
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/CD_changer.jpg)
 
-### Emulator
-
-![](https://github.com/oritomov/cdc/blob/master/etc/img/emulator.png)
-
-### Circuit
-
-![](https://github.com/oritomov/cdc/blob/master/etc/cir/circuit.png)
-
-### PCB
-
-![](https://github.com/oritomov/cdc/blob/master/etc/pcb/cdc10.png)
-
-
-### Beta
-
-![](https://github.com/oritomov/cdc/blob/master/etc/img/DSC_0578.JPG)
-
-### Release Candidate #1
-
-![](https://github.com/oritomov/cdc/blob/master/etc/img/pcb_rel_1.JPG)
-![](https://github.com/oritomov/cdc/blob/master/etc/img/asm_rel_1.JPG)
-
 ### I2C/TWI communication betwwen HU and AI
 #### OFF
 
@@ -62,6 +40,28 @@
  * 00100001 (8bit data 0x21)
  * 0 (Ack)
  * (Stop)
+
+### Emulator
+
+![](https://github.com/oritomov/cdc/blob/master/etc/img/emulator.png)
+
+### Circuit
+
+![](https://github.com/oritomov/cdc/blob/master/etc/cir/circuit.png)
+
+### PCB
+
+![](https://github.com/oritomov/cdc/blob/master/etc/pcb/cdc11.png)
+
+
+### Beta
+
+![](https://github.com/oritomov/cdc/blob/master/etc/img/DSC_0578.JPG)
+
+### Release Candidate #1
+
+![](https://github.com/oritomov/cdc/blob/master/etc/img/pcb_rel_1.JPG)
+![](https://github.com/oritomov/cdc/blob/master/etc/img/asm_rel_1.JPG)
 
 ### References
 
