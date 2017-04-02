@@ -25,11 +25,16 @@
 ### PCB
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/pcb/cdc10.png)
-![](https://github.com/oritomov/cdc/blob/master/etc/img/pcb_rel_1.JPG)
+
 
 ### Beta
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/DSC_0578.JPG)
+
+### Release Candidate #1
+
+![](https://github.com/oritomov/cdc/blob/master/etc/img/pcb_rel_1.JPG)
+![](https://github.com/oritomov/cdc/blob/master/etc/img/asm_rel_1.JPG)
 
 ### I2C/TWI communication betwwen HU and AI
 #### OFF
