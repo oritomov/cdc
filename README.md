@@ -84,6 +84,10 @@ Note: There is a trick. First hand shake of the HU comes around 0.4 seconds afte
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/pcb_rel_1.JPG)
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/asm_rel_1.JPG)
 
+### Test
+
+[![Release Candidate Test](https://www.youtube.com/upload_thumbnail?v=TbPQ_YEeIYg&t=hqdefault&ts=1491150349312)](https://www.youtube.com/watch?v=TbPQ_YEeIYg "Release Candidate Test")
+
 ### References
 
  * [VAG CDC Faker](http://dev.shyd.de/2013/09/avr-raspberry-pi-vw-beta-vag-cdc-faker/)
