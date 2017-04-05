@@ -4,25 +4,10 @@
 
 This isn't my biggest project, but it is most complicated and related to too much unknown to me things. It is my first Python code and my first Arduino project.
 
+### Hardware
+
 Audi Gamma CC Bose (HU) is my auto cassette player. It has ability to rule a CD Changer, not directly, but via specific Audi Interface (AI).
 
-Even though communication with VAG's CD Changers is pretty well documented, I couldn't find any information about communication between my HU and the AI. I found out how the HU tries to communicate to the AI, but I have not idea what the AI should reply. I will be very appreciate if some kind person records the communication and sends it to me. This will be great help in order my emulator to shows played track and album number. At the moment it works without this.
-
-The HU sends I2C/TWI signals to AI on 950 Hz (or sort of) to the address 0x40. ON is two bytes 0xA1 and 0x21, OFF is same bytes back order. Other signals what I riddle are from buttons '^', 'v', '>>' and '<<'. There is two more signals, one when HU doesn't like communication - I called "Cancel", and one more, but I have no idea when and why HU sends it.
-
-I implemented the emulator from Arduino to replace the AI and Raspberry Pi to replace the CD Changer. I use separate DAC because that build in RPi is ... not good enough.
-
-Communication between the Arduino and RPi is serial UART similar (but not same) to standard CDC communication.
-
-Communication between the RPi and the DAC what I chose, indeed PCB5102A, is via I2S.
-
-I've made a special PCB to hold everything. The connector to the HU is hand made 10 pins similar to common ISO connector.
-
-Power is based on LM2575-5.
-
-Note: There is a trick. First hand shake of the HU comes around 0.4 seconds after HU power on. The Arduino takes more time for boot. Thats why I add two NPN transistors - one in order to lower acknowledge bit of I2C/TWI communication, and another one to cancel this after Arduino's boot.
-
-### Hardware
 #### Audi Gamma CC Bose - Head Unit (HU)
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/Audo%20Gamma%20CC%20Bose.jpg?raw=true)
@@ -37,6 +22,11 @@ Note: There is a trick. First hand shake of the HU comes around 0.4 seconds afte
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/CD_changer.jpg)
 
 ### I2C/TWI communication betwwen HU and AI
+
+Even though communication with VAG's CD Changers is pretty well documented, I couldn't find any information about communication between my HU and the AI. I found out how the HU communicate to the AI, but I have not idea what the AI should reply.
+
+The HU sends I2C/TWI signals to AI on 950 Hz (or sort of) to the address 0x40. ON is two bytes 0xA1 and 0x21, OFF is same bytes back order. Other signals what I riddle are from buttons '^', 'v', '>>' and '<<'. There is two more signals, one when HU doesn't like communication - I called "Cancel", and one more, but I have no idea when and why HU sends it.
+
 #### OFF
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/off.png)
@@ -62,12 +52,24 @@ Note: There is a trick. First hand shake of the HU comes around 0.4 seconds afte
  * 00100001 (8bit data 0x21)
  * 0 (Ack)
  * (Stop)
+ 
+NOTE: I will be very appreciate if some kind person records the communication and sends it to me. This will be great help in order my emulator to shows played track and album number. At the moment it works without this.
 
 ### Emulator
+
+I implemented the emulator from Arduino to replace the AI and Raspberry Pi to replace the CD Changer. I use separate DAC because that build in RPi is ... not good enough.
+
+Communication between the Arduino and RPi is serial UART similar (but not same) to standard CDC communication.
+
+Communication between the RPi and the DAC what I chose, indeed PCB5102A, is via I2S.
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/emulator.png)
 
 ### Circuit
+
+Power is based on LM2575-5.
+
+Note: There is a trick. First hand shake of the HU comes around 0.4 seconds after HU power on. The Arduino takes more time for boot. Thats why I add two NPN transistors - one in order to lower acknowledge bit of I2C/TWI communication, and another one to cancel this after Arduino's boot.
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/cir/circuit.png)
 
@@ -76,6 +78,8 @@ Note: There is a trick. First hand shake of the HU comes around 0.4 seconds afte
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/DSC_0578.JPG)
 
 ### PCB
+
+I've made a special PCB to hold everything. The connector to the HU is hand made 10 pins similar to common ISO connector.
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/pcb/cdc11.png)
 
