@@ -86,7 +86,7 @@ Note: There is a trick. First hand shake of the HU comes around 0.4 seconds afte
 
 ### Test
 
-[![Release Candidate Test](https://www.youtube.com/upload_thumbnail?v=TbPQ_YEeIYg&t=hqdefault&ts=1491150349312)](https://www.youtube.com/watch?v=TbPQ_YEeIYg "Release Candidate Test")
+[![Release Candidate Test](https://i.ytimg.com/vi/TbPQ_YEeIYg/hqdefault.jpg)](https://www.youtube.com/watch?v=TbPQ_YEeIYg "Release Candidate Test")
 
 ### References
 
