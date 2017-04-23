@@ -94,7 +94,7 @@ def read_config(albumNum, trackNum):
 	try:
 		albumNum = config.getint("cdc", "album")
 		trackNum = config.getint("cdc", "track")
-		logger.info("read gonfig album: {}, track: {}".format(albumNum, trackNum))
+		logger.info("read config album: {}, track: {}".format(albumNum, trackNum))
 	except:
 		logger.warning("can\'t read config file")
 	return [albumNum, trackNum]
@@ -177,6 +177,8 @@ while True:
 				mount()
 
 			cmd("mpd /home/pi/.mpd/mpd.conf") #restart mpd
+			r = cmd("mpc update")
+			logger.info(r)
 
 			nums = read_config(albumNum, trackNum)
 			albumNum = nums[0]
@@ -188,6 +190,7 @@ while True:
 
 		if usb_storage and not find_dev(MASS_STORAGE):
 			logger.warning("missing Mass Storage")
+			cmd("mpc stop")
 			usb_storage = False
 			#cmd("mpc stop")
 
