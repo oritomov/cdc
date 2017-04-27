@@ -73,20 +73,20 @@ Note: There is a trick. First hand shake of the HU comes around 0.4 seconds afte
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/cir/circuit.png)
 
-### Beta
-
-![](https://github.com/oritomov/cdc/blob/master/etc/img/DSC_0578.JPG)
-
 ### PCB
 
 I've made a special PCB to hold everything. The connector to the HU is hand made 10 pins similar to common ISO connector.
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/pcb/cdc11.png)
 
-### Release Candidate #1
+### Release #1
 
-![](https://github.com/oritomov/cdc/blob/master/etc/img/pcb_rel_1.JPG)
-![](https://github.com/oritomov/cdc/blob/master/etc/img/asm_rel_1.JPG)
+![](https://github.com/oritomov/cdc/blob/master/etc/img/rel_1_1.JPG)
+![](https://github.com/oritomov/cdc/blob/master/etc/img/rel_1_2.JPG)
+![](https://github.com/oritomov/cdc/blob/master/etc/img/rel_1_3.JPG)
+![](https://github.com/oritomov/cdc/blob/master/etc/img/rel_1_4.JPG)
+![](https://github.com/oritomov/cdc/blob/master/etc/img/rel_1_5.JPG)
+![](https://github.com/oritomov/cdc/blob/master/etc/img/rel_1_6.JPG)
 
 ### Test
 
