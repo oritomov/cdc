@@ -86,7 +86,7 @@ HU_SHFFL    = chr(0x60)
 HU_SEQNT    = chr(0x08)
 
 # NOTE! Those are two made up commands in order to change the CDs
-HU_NEXT_CD  = chr(0x00)
+HU_NEXT_CD  = chr(0xFE)
 HU_PREV_CD  = chr(0xFF)
 
 global ser
@@ -147,7 +147,7 @@ def get_command():
 		return c
 		
 	#else
-	logging.warning("serial: {}".format(c))
+	logging.warning("serial: {}".format(hex(ord(c))))
 
 	return None
 

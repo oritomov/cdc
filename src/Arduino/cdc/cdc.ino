@@ -31,7 +31,7 @@ const unsigned int HU_NO_IDEA       = 0x9212; // probably instead of 'stop'
 const unsigned int HU_CANCEL        = 0x22A2;
 
 // NOTE! Those are two made up commands in order to change the CDs
-const char CDC_NEXT_CD              = 0x00;
+const char CDC_NEXT_CD              = 0xFE;
 const char CDC_PREV_CD              = 0xFF;
 
 int cdc_command;
