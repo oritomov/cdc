@@ -87,6 +87,7 @@ I've made a special PCB to hold everything. The connector to the HU is hand made
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/rel_1_4.JPG)
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/rel_1_5.JPG)
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/rel_1_6.JPG)
+![](https://github.com/oritomov/cdc/blob/master/etc/img/boxed.jpg)
 
 ### Test
 
