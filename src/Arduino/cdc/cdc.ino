@@ -142,26 +142,26 @@ void receiveEvent(int howMany) {
           break;
         case HU_LEFT_HOLD:
           //Serial.println("LEFT HOLD");
-          Serial.print(CDC_PREV_CD);
+          Serial.print(CDC_PREV);
           break;
         case HU_LEFT_RELEASE:
           //Serial.println("LEFT RELEASE");
           break;
         case HU_RIGHT_HOLD:
-          Serial.print(CDC_NEXT_CD);
+          Serial.print(CDC_NEXT);
           //Serial.println("RIGHT HOLD");
           break;
         case HU_RIGHT_RELEASE:
           //Serial.println("RIGHT RELEASE");
           break;
         case HU_DOWN_HOLD:
-          Serial.print(CDC_NEXT);
+          Serial.print(CDC_NEXT_CD);
           break;
         case HU_DOWN_RELEASE:
           //Serial.println("DOWN RELEASE");
           break;
         case HU_UP_HOLD:
-          Serial.print(CDC_PREV);
+          Serial.print(CDC_PREV_CD);
           break;
         case HU_UP_RELEASE:
           //Serial.println("UP RELEASE");
