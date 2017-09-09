@@ -19,7 +19,7 @@ import vag as hu
 MASS_STORAGE = 0x8
 DEV_SD_STAR = "/dev/sd*"
 USB_PATH = "/mnt/usb"
-CDC_PATH = USB_PATH + "/cdc"
+CDC_PATH = USB_PATH + "/music"
 CONFIG = "cdc.ini"
 #GPIO_Pin = 7
 #PIN_ON_TIME = 30
@@ -123,6 +123,13 @@ def cmd(command):
 		logger.debug(res)
 	return res
 
+def shuffle(album):
+	shuffle = "\"" + CDC_PATH + "/" + album + "/shuffle\""
+	logger.info(shuffle)
+	if not os.path.exists(shuffle):
+		return True
+	return False
+
 # load new cd-dir
 def play_cd(change, albumNum, trackNum, play):
 	r = cmd("mpc ls")
@@ -139,10 +146,14 @@ def play_cd(change, albumNum, trackNum, play):
 		logger.info(album)
 		write_config(albumNum, trackNum)
 		cmd("mpc clear")
-		cmd("mpc listall \"" + album + "\" | mpc add")
-		cmd("mpc volume 100")
-		cmd("mpc play " + str(trackNum))
-		if not play:
+		if shuffle(album):
+			cmd("mpc listall \"" + album + "\" | shuf | mpc add")
+		else:
+			cmd("mpc listall \"" + album + "\" | mpc add")
+#		cmd("mpc volume 100")
+		if play:
+			cmd("mpc play " + str(trackNum))
+		else:
 			cmd("mpc pause")
 		logger.info("debug: album: {}, track: {}".format(albumNum, trackNum))
 	return [albumNum, trackNum]
