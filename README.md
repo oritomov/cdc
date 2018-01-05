@@ -97,6 +97,7 @@ I've made a special PCB to hold everything. The connector to the HU is hand made
 
  * [VAG CDC Faker](http://dev.shyd.de/2013/09/avr-raspberry-pi-vw-beta-vag-cdc-faker/)
  * [Nick Gammon's page about I2C](http://gammon.com.au/i2c)
+ * [How to use I2C-bus](http://www.ermicro.com/blog/?p=744)
  * [Raspberry Pi rev2 template with mounting holes](https://www.raspberrypi.org/blog/raspberry-pi-rev2-template-with-mounting-holes/)
  * efficient 12V to 5V convertor [LM2575](http://www.ti.com.cn/cn/lit/ds/symlink/lm1575.pdf)
  * DAC [PCM5102A](https://www.raspberrypi.org/forums/viewtopic.php?f=45&t=57069)  ([Beyond ES9023 PCM1794](https://www.google.bg/search?q=Beyond+ES9023+PCM1794))
