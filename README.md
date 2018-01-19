@@ -109,3 +109,5 @@ I've made a special PCB to hold everything. The connector to the HU is hand made
 ### Special Thanks
 
  * ALOHAta
+ * Lars Frerichs
+ * grizzly@audibg (George)
