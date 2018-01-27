@@ -158,6 +158,7 @@ def play_cd(change, albumNum, trackNum, play):
 #		cmd('mpc volume 100')
 		if play:
 			cmd('mpc play ' + str(trackNum))
+			hu.set_status(albumNum, trackNum)
 		else:
 			cmd('mpc pause')
 		logger.info('debug: album: {}, track: {}'.format(albumNum, trackNum))

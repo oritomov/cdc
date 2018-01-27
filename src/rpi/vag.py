@@ -153,9 +153,11 @@ def get_command():
 
 # frame cd#   tr#   time  time  mode  frame frame
 # 0x34, 0xBE, 0xFF, 0xFF, 0xFF, 0xFF, 0xCF, 0x3C
-def set_status(cd, track, timer):
+def set_status(cd, track, timer=None):
 	logging.info("serial return: cd {}, track {}, timer {}".format(cd, track, timer))
 	# just a byte at the moment
 	byte = chr(0x34)
 	ser.write(byte)
+	ser.write(chr((cd % 10) + 1))
+	ser.write(chr((track % 100) + ((track % 100) / 10) * 6))
 	return
