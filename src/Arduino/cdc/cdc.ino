@@ -1,170 +1,232 @@
 // CD Changer Interface for Audi Gamma CC Bose
 // by Orlin Tomov <mail:oritomov@yahoo.com>
 
-// Receives data as an I2C/TWI slave device
+// Receives data from HU as an I2C/TWI slave device and send it via UART to CDC.
+// Receines data from CDC via UART and send it to HU via custom Gamma protocol
 
 // Created 5 Jun 2016
 
 // This code is in the public domain.
 
-
 #include <Wire.h>
+#include "gamma.h"
 #include "vag.h"
 
-const int ledPin = 13; // the pin that the LED is attached to
-const int readyPin = 12; // the pin that will off SDA ground
+// the pin that the LED is attached to
+#define ledPin            13
+// the pin that will off SDA ground
+#define readyPin          12
+
+// i2c address
+#define HU_I2C_ADDRESS    (uint8_t)0x40
 
 // Commands from HU via i2c
-const unsigned int HU_START         = 0x21A1;
-const unsigned int HU_STOP          = 0xA121;
-const unsigned int HU_LEFT_HOLD     = 0x0181;
-const unsigned int HU_LEFT_RELEASE  = 0x8101;
-const unsigned int HU_RIGHT_HOLD    = 0x0282;
-const unsigned int HU_RIGHT_RELEASE = 0x8202;
-const unsigned int HU_DOWN_HOLD     = 0x0383;
-const unsigned int HU_DOWN_RELEASE  = 0x8303;
-const unsigned int HU_UP_HOLD       = 0x0484;
-const unsigned int HU_UP_RELEASE    = 0x8404;
-// and
-const unsigned int HU_NO_IDEA       = 0x9212; // probably instead of 'stop'
+#define HU_START          (uint16_t)0x21A1
+#define HU_STOP           (uint16_t)0xA121
+#define HU_LEFT_HOLD      (uint16_t)0x0181
+#define HU_LEFT_RELEASE   (uint16_t)0x8101
+#define HU_RIGHT_HOLD     (uint16_t)0x0282
+#define HU_RIGHT_RELEASE  (uint16_t)0x8202
+#define HU_DOWN_HOLD      (uint16_t)0x0383
+#define HU_DOWN_RELEASE   (uint16_t)0x8303
+#define HU_UP_HOLD        (uint16_t)0x0484
+#define HU_UP_RELEASE     (uint16_t)0x8404
+// probably instead of 'stop'
+#define HU_NO_IDEA        (uint16_t)0x9212
 // or
-const unsigned int HU_CANCEL        = 0x22A2;
+#define HU_CANCEL         (uint16_t)0x22A2
+
+#define HU_STATUS         (uint8_t)0x34
 
 // NOTE! Those are two made up commands in order to change the CDs
-const char CDC_NEXT_CD              = 0xFE;
-const char CDC_PREV_CD              = 0xFF;
+#define CDC_NEXT_CD       (uint8_t)0xFE
+#define CDC_PREV_CD       (uint8_t)0xFF
 
-int cdc_command;
+#define CDC_NO_DISK       (uint8_t)0x20
+
+#define HU_STATUS_HEAD    (uint8_t)0
+#define HU_STATUS_CD      (uint8_t)1
+#define HU_STATUS_TR      (uint8_t)2
+
+int hu_handshaked;
+int started;
+uint16_t cdc_command;
+uint8_t cdc_cd;
+uint8_t cdc_tr;
 
 void setup() {
+  hu_handshaked = false;
+  started = false;
   cdc_command = 0;
-  // setting off SDA ground:
-  /**/pinMode(readyPin, OUTPUT);
-  digitalWrite(readyPin, HIGH);     // turn on the LED:
+  cdc_cd = 1;
+  cdc_tr = 1;
+
+  // setting off SDA ground after boot
+  pinMode(readyPin, OUTPUT);
+  digitalWrite(readyPin, HIGH);
+
   // initialize the LED pin as an output:
-  /**/pinMode(ledPin, OUTPUT);
+  pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, HIGH);     // turn on the LED:
 
-  Wire.begin(64);                 // join i2c bus with address #40
-
-  // set baud rite 960
-  TWBR = 130;                     // ((16 MHz / 960 Hz) - 16) / 2 / 64
-  //Serial.println(TWBR, HEX);
-  /* Select 64 as the prescaler value - see page 239 of the data sheet */
-  /**/TWSR |= bit (TWPS1);
-  /**/TWSR |= bit (TWPS0);
-  //Serial.println(TWSR, HEX);
- 
-  Wire.onRequest(requestEvent);   // interrupt handler for when data is wanted
-  
-  Wire.onReceive(receiveEvent);   // register event
-
   Serial.begin(9600);             // start serial for output, SERIAL_8N1 data, parity, and stop bits
+
+  wire();                         // join i2c bus
+
   digitalWrite(ledPin, LOW);      // turn off the LED:
 }
 
 void loop() {
-  delay(100);
-  //check();
-  response();
-}
-
-void response() {
   if (cdc_command != 0) {
+    // start
     if (cdc_command == HU_START) {
-      // when started
-      if (Serial.available() > 0) {
-        // read the incoming byte:
-        int incomingByte = Serial.read();
-        cdc_command = 0;
-      } else {
-        // wait for response
-        delay(3000);
-        // trying again
-        Serial.print(CDC_PLAY);
-        Serial.print(CDC_END_CMD);
+      started = true;
+      cdc_command = 0;
+      if (not hu_handshaked) {
+        cdc_cd = 0;
+        cdc_tr = 0;
+        gamma();
       }
     }
-  }
-}
-
-void check() {
-  if (cdc_command != 0) {
-    Serial.println("Checking...");
-    digitalWrite(ledPin, HIGH);   // turn on the LED:
-    for (int j = 0; j < 10; j++) {
-      delay(1000);
-
-      byte count = 0;
-      for (byte i = 8; i < 120; i++)
-      {
-        Wire.beginTransmission (i);
-        if (Wire.endTransmission () == 0)
-        {
-          Serial.print ("Found address: ");
-          Serial.print (i, DEC);
-          Serial.print (" (0x");
-          Serial.print (i, HEX);
-          Serial.println (")");
-          count++;
-          delay (100);            // maybe unneeded?
-        } // end of good response
-      } // end of for loop
-      Serial.print ("Found ");
-      Serial.print (count, DEC);
-      Serial.println (" device(s).");
+    // stop
+    if (cdc_command == HU_STOP) {
+      started = false;
+      hu_handshaked = false;
+      cdc_command = 0;
     }
-    Serial.println ("Done.");
-    cdc_command = 0;
-    digitalWrite(ledPin, LOW);    // turn off the LED:
+  }
+ 
+  if (started) {
+    // handshake
+    if (not hu_handshaked) {
+      hu_handshake();
+    }
+
+    // write status
+    if (cdc_status()) {
+      gamma();
+    }
+  }
+  delay(1);
+}
+
+void wire() {
+  Wire.begin(HU_I2C_ADDRESS);     // join i2c bus with address #40
+  Wire.onReceive(receiveEvent);   // register event
+}
+
+void hu_handshake() {
+  // when started but not handshaked
+  if (cdc_status()) {
+    hu_handshaked = true;
+    gamma();
+//  } else {
+//    // wait for a while
+//    delay(3000);
+//    //uint32_t currentMillis = millis();
+//    //static uint32_t previousMillis;
+//    //if (currentMillis - previousMillis >= 3000) {
+//    //  previousMillis = currentMillis;
+//      // trying again
+//      digitalWrite(readyPin, HIGH);
+//      Serial.write(CDC_PLAY);
+//      Serial.write(CDC_END_CMD);
+//      digitalWrite(ledPin, LOW);
+//    //}
   }
 }
 
-// function that executes whenever data is received from master
+// check for status from the CDC
+int cdc_status() {
+  static uint8_t status = HU_STATUS_HEAD;
+  if (Serial.available() > 0) {
+    digitalWrite(ledPin, HIGH);     // turn on the LED:
+    // read the incoming byte:
+    uint8_t incomingByte = Serial.read();
+    switch (status) {
+      case HU_STATUS_HEAD:
+        if (incomingByte == HU_STATUS) {
+          status = HU_STATUS_CD;
+        } else {
+          Serial.println(incomingByte, HEX);
+        }
+        break;
+      case HU_STATUS_CD:
+        cdc_cd = incomingByte;
+        status = HU_STATUS_TR;
+        break;
+      case HU_STATUS_TR:
+        cdc_tr = incomingByte;
+        status = HU_STATUS_HEAD;
+        digitalWrite(ledPin, LOW);      // turn off the LED:
+        //char s[100];
+        //sprintf(s, "%x %x %x", incomingByte, cdc_cd, cdc_tr);
+        //Serial.println(s);
+        return true;
+      default:
+        status = HU_STATUS_HEAD;
+        Serial.println(incomingByte, HEX);
+    }
+    digitalWrite(ledPin, LOW);      // turn off the LED:
+  }
+  return false;
+}
+
+// uses custom Gamma protocol to report CDC status
+void gamma() {
+  Wire.end();                     // stops I2C bus
+  delay(30);
+  digitalWrite(ledPin, HIGH);     // turn on the LED:
+  uint8_t data[3];
+  data[0] = cdc_cd;
+  data[1] = cdc_tr;
+  data[2] = data[0] + data[1] + 1;
+  Gamma.transmit(HU_I2C_ADDRESS, data);
+  digitalWrite(ledPin, LOW);      // turn off the LED:
+  wire();                         // restart I2C buss
+}
+
+// function that executes whenever data is received from I2C master
 // this function is registered as an event, see setup()
+// translate command for the CDC
 void receiveEvent(int howMany) {
+  digitalWrite(ledPin, HIGH);     // turn on the LED:
   while (0 < Wire.available()) {  // loop through all but the last
-    int x0 = Wire.read();         // receive byte as a character
+    uint8_t x0 = Wire.read();         // receive byte as a character
     if (0 < Wire.available()) {
-      int x1 = Wire.read();       // receive byte as an integer
-      unsigned int x = ((x1 << 8) + x0);
+      uint8_t x1 = Wire.read();       // receive byte as an integer
+      uint16_t x = ((x1 << 8) + x0);
       switch (x) {
         case HU_START:
-          Serial.print(CDC_PLAY);
-          Serial.print(CDC_END_CMD);
+          Serial.write(CDC_PLAY);
+          Serial.write(CDC_END_CMD);
           // response
           cdc_command = HU_START;
           break;
         case HU_STOP:
-          Serial.print(CDC_STOP);
-          Serial.print(CDC_END_CMD);
-          cdc_command = 0;
+          Serial.write(CDC_STOP);
+          Serial.write(CDC_END_CMD);
+          cdc_command = HU_STOP;
           break;
         case HU_LEFT_HOLD:
-          //Serial.println("LEFT HOLD");
-          Serial.print(CDC_PREV);
+          Serial.write(CDC_PREV);
           break;
         case HU_LEFT_RELEASE:
-          //Serial.println("LEFT RELEASE");
           break;
         case HU_RIGHT_HOLD:
-          Serial.print(CDC_NEXT);
-          //Serial.println("RIGHT HOLD");
+          Serial.write(CDC_NEXT);
           break;
         case HU_RIGHT_RELEASE:
-          //Serial.println("RIGHT RELEASE");
           break;
         case HU_DOWN_HOLD:
-          Serial.print(CDC_NEXT_CD);
+          Serial.write(CDC_NEXT_CD);
           break;
         case HU_DOWN_RELEASE:
-          //Serial.println("DOWN RELEASE");
           break;
         case HU_UP_HOLD:
-          Serial.print(CDC_PREV_CD);
+          Serial.write(CDC_PREV_CD);
           break;
         case HU_UP_RELEASE:
-          //Serial.println("UP RELEASE");
           break;
         case HU_NO_IDEA:
           Serial.print("no idea "); //unknow
@@ -183,11 +245,6 @@ void receiveEvent(int howMany) {
       Serial.println(x0, HEX);    // print the integer
     }
   }
+  digitalWrite(ledPin, LOW);      // turn off the LED:
 }
 
-// called by interrupt service routine when response is wanted
-void requestEvent () {
-  Serial.println("!!!!!!");
-  digitalWrite(ledPin, HIGH);     // turn on the LED:
-  Wire.write (0xFF);              // send response
-} // end of requestEvent
