@@ -1,48 +1,45 @@
-#include "my_wire.h"
+#include <Wire.h>
+#include "gamma.h"
+
+// the pin that will off SDA ground
+#define readyPin          12
 
 // HU i2c address
-const byte HU_I2C_ADDRESS           = 0x40;
+#define HU_I2C_ADDRESS    (uint8_t)0x40
 
 // Commands from HU via i2c
-const unsigned int HU_START         = 0x21A1;
-const unsigned int HU_STOP          = 0xA121;
-const unsigned int HU_LEFT_HOLD     = 0x0181;
-const unsigned int HU_LEFT_RELEASE  = 0x8101;
-const unsigned int HU_RIGHT_HOLD    = 0x0282;
-const unsigned int HU_RIGHT_RELEASE = 0x8202;
-const unsigned int HU_DOWN_HOLD     = 0x0383;
-const unsigned int HU_DOWN_RELEASE  = 0x8303;
-const unsigned int HU_UP_HOLD       = 0x0484;
-const unsigned int HU_UP_RELEASE    = 0x8404;
+#define HU_START          (uint16_t)0x21A1
+#define HU_STOP           (uint16_t)0xA121
+#define HU_LEFT_HOLD      (uint16_t)0x0181
+#define HU_LEFT_RELEASE   (uint16_t)0x8101
+#define HU_RIGHT_HOLD     (uint16_t)0x0282
+#define HU_RIGHT_RELEASE  (uint16_t)0x8202
+#define HU_DOWN_HOLD      (uint16_t)0x0383
+#define HU_DOWN_RELEASE   (uint16_t)0x8303
+#define HU_UP_HOLD        (uint16_t)0x0484
+#define HU_UP_RELEASE     (uint16_t)0x8404
 
-unsigned int command;
-byte cd, tr;
+uint16_t cdc_command;
+uint8_t cd, tr;
 
 void setup() {
-  Serial.begin(9600);             // start serial for output, SERIAL_8N1 data, parity, and stop bits
+//  Serial.begin(9600);             // start serial for output, SERIAL_8N1 data, parity, and stop bits
 
-  MyWire.begin(HU_I2C_ADDRESS);     // join i2c bus with address #40
-  MyWire.onReceive(receiveEvent);   // register event
+  // setting off SDA ground after boot
+  pinMode(readyPin, OUTPUT);
+  digitalWrite(readyPin, HIGH);
 
-  // set baud rite 960
-  TWBR = 130;                     // ((16 MHz / 960 Hz) - 16) / 2 / 64
+  wire();
 
-  //Serial.println(TWBR, HEX);
-  /* Select 64 as the prescaler value - see page 239 of the data sheet */
-  TWSR |= bit (TWPS1);
-  TWSR |= bit (TWPS0);
-  //Serial.println(TWSR, HEX);
-
-  command = 0;
+  cdc_command = 0;
   cd = 0;
   tr = 0;
-  Serial.println("ready!");
+//  Serial.println("ready!");
 }
 
 void loop() {
-  if (command > 0) {
-    byte n;
-    switch(command){
+  if (cdc_command > 0) {
+    switch(cdc_command){
       case HU_START:
         break;
       case HU_RIGHT_RELEASE:
@@ -58,56 +55,50 @@ void loop() {
         cd--;
         break;
     }
-    n = 1;
-    write(n);
+    Wire.end();
+    gamma();
+    wire();
   }
 }
 
-void prepare(byte* data) {
-  //no cd     16, x, x
+void wire() {
+  Wire.begin(HU_I2C_ADDRESS);     // join i2c bus with address #40
+  Wire.onReceive(receiveEvent);   // register event
+}
+
+void prepare(uint8_t* data) {
   data[0] = cd;
   data[1] = tr;
   data[2] = cd+tr+1;
 }
 
-void write(byte n) {
-  byte data[3];
+void gamma() {
+  delay(30);
+  uint8_t data[3];
   prepare(data);
-  for (int i = 0; i < n; i++) {
-    MyWire.beginTransmission(HU_I2C_ADDRESS);
-    size_t size = MyWire.write(data, sizeof(data));
-    byte res = MyWire.endTransmission();
-    char s[100];
-    sprintf(s, "at: 0x%x - %d, %d, %d", HU_I2C_ADDRESS, data[0], data[1], data[2]);
-    Serial.println(s);
-    if (res != 0) {
-      Serial.print(res);
-      Serial.println(" twi error!");
-      break;
-    }
-    if (i < n - 1) {
-      delay(30);
-    }
-  }
-  command = 0;
+  Gamma.transmit(HU_I2C_ADDRESS, data);
+  char s[100];
+  sprintf(s, "at: 0x%x - %d, %d, %d", HU_I2C_ADDRESS, data[0], data[1], data[2]);
+  Serial.println(s);
+  cdc_command = 0;
 }
 
 // function that executes whenever data is received from master
 // this function is registered as an event, see setup()
 void receiveEvent(int howMany) {
-  while (0 < MyWire.available()) {  // loop through all but the last
-    int x0 = MyWire.read();         // receive byte as a character
-    if (0 < MyWire.available()) {
-      int x1 = MyWire.read();       // receive byte as an integer
-      unsigned int x = ((x1 << 8) + x0);
+  while (0 < Wire.available()) {  // loop through all but the last
+    uint8_t x0 = Wire.read();         // receive byte as a character
+    if (0 < Wire.available()) {
+      uint8_t x1 = Wire.read();       // receive byte as an integer
+      uint16_t x = ((x1 << 8) + x0);
       switch (x) {
         case HU_START:
           Serial.println("START");
-          command = HU_START;
+          cdc_command = HU_START;
           break;
         case HU_STOP:
           Serial.println("HU_STOP");
-          command = 0;
+          cdc_command = 0;
           break;
         case HU_RIGHT_HOLD:
           Serial.println("HU_RIGHT_HOLD");
@@ -115,7 +106,7 @@ void receiveEvent(int howMany) {
           break;
         case HU_RIGHT_RELEASE:
           Serial.println("HU_RIGHT_RELEASE");
-          command = HU_RIGHT_RELEASE;
+          cdc_command = HU_RIGHT_RELEASE;
           break;
         case HU_LEFT_HOLD:
           Serial.println("HU_LEFT_HOLD");
@@ -123,7 +114,7 @@ void receiveEvent(int howMany) {
           break;
         case HU_LEFT_RELEASE:
           Serial.println("HU_LEFT_RELEASE");
-          command = HU_LEFT_RELEASE;
+          cdc_command = HU_LEFT_RELEASE;
           break;
         case HU_UP_HOLD:
           Serial.println("HU_UP_HOLD");
@@ -131,7 +122,7 @@ void receiveEvent(int howMany) {
           break;
         case HU_UP_RELEASE:
           Serial.println("HU_UP_RELEASE");
-          command = HU_UP_RELEASE;
+          cdc_command = HU_UP_RELEASE;
           break;
         case HU_DOWN_HOLD:
           Serial.println("HU_DOWN_HOLD");
@@ -139,7 +130,7 @@ void receiveEvent(int howMany) {
           break;
         case HU_DOWN_RELEASE:
           Serial.println("HU_DOWN_RELEASE");
-          command = HU_DOWN_RELEASE;
+          cdc_command = HU_DOWN_RELEASE;
           break;
         default:
           Serial.print("??"); //unknow
