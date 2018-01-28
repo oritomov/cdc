@@ -82,11 +82,6 @@ void loop() {
     if (cdc_command == HU_START) {
       started = true;
       cdc_command = 0;
-      if (not hu_handshaked) {
-        cdc_cd = 0;
-        cdc_tr = 0;
-        gamma();
-      }
     }
     // stop
     if (cdc_command == HU_STOP) {
@@ -97,7 +92,7 @@ void loop() {
   }
  
   if (started) {
-    // handshake
+    // handshake. means read and write status if any
     if (not hu_handshaked) {
       hu_handshake();
     }
