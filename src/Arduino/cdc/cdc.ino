@@ -176,7 +176,7 @@ void prepare(uint8_t* data) {
   data[0] = cdc_cd;
   data[1] = cdc_tr;
   uint16_t check = cdc_cd + cdc_tr + 1;
-  if ((check & 0x1F0) && ((check - cdc_cd) <= (check & 0x1F0))) {
+  if ((check & 0x1F0) && ((check - (cdc_cd & 0x0f)) <= (check & 0x1F0))) {
     check -= 0x10;
   }
   data[2] = check;
