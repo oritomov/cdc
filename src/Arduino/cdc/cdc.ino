@@ -120,19 +120,19 @@ void hu_handshake() {
   if (cdc_status()) {
     hu_handshaked = true;
     gamma();
-//  } else {
-//    // wait for a while
-//    delay(3000);
-//    //uint32_t currentMillis = millis();
-//    //static uint32_t previousMillis;
-//    //if (currentMillis - previousMillis >= 3000) {
-//    //  previousMillis = currentMillis;
-//      // trying again
-//      digitalWrite(readyPin, HIGH);
-//      Serial.write(CDC_PLAY);
-//      Serial.write(CDC_END_CMD);
-//      digitalWrite(ledPin, LOW);
-//    //}
+  } else {
+    // wait for a while
+    //delay(3000);
+    uint32_t currentMillis = millis();
+    static uint32_t previousMillis;
+    if (currentMillis - previousMillis >= 3000) {
+      previousMillis = currentMillis;
+      // trying again
+      digitalWrite(ledPin, HIGH);
+      Serial.write(CDC_PLAY);
+      Serial.write(CDC_END_CMD);
+      digitalWrite(ledPin, LOW);
+    }
   }
 }
 
@@ -172,15 +172,23 @@ int cdc_status() {
   return false;
 }
 
+void prepare(uint8_t* data) {
+  data[0] = cdc_cd;
+  data[1] = cdc_tr;
+  uint16_t check = cdc_cd + cdc_tr + 1;
+  if ((check & 0x1F0) && ((check - cdc_cd) <= (check & 0x1F0))) {
+    check -= 0x10;
+  }
+  data[2] = check;
+}
+
 // uses custom Gamma protocol to report CDC status
 void gamma() {
   Wire.end();                     // stops I2C bus
   delay(30);
   digitalWrite(ledPin, HIGH);     // turn on the LED:
   uint8_t data[3];
-  data[0] = cdc_cd;
-  data[1] = cdc_tr;
-  data[2] = data[0] + data[1] + 1;
+  prepare(data);
   Gamma.transmit(HU_I2C_ADDRESS, data);
   digitalWrite(ledPin, LOW);      // turn off the LED:
   wire();                         // restart I2C buss

@@ -42,6 +42,7 @@
       TCNT1  = 0;
 
       OCR1A = 8333;             // compare match register 16MHz/1/960Hz * 2
+                                // it is ok between 0x200 & 0x2300
       TCCR1B |= (1 << WGM12);   // CTC mode
       TCCR1B |= (1 << CS10);    // 1 prescaler 
       TIMSK1 |= (1 << OCIE1A);  // enable timer compare interrupt
