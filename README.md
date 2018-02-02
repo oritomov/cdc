@@ -25,7 +25,7 @@ Audi Gamma CC Bose (HU) is my auto cassette player. It has ability to rule a CD 
 
 Even though communication with VAG's CD Changers is pretty well documented, I couldn't find any information about communication between my HU and the AI. This is what I surveyed.
 
-The HU sends I2C/TWI signals to AI on 960 Hz (or sort of) to the address 0x40. ON is two bytes 0xA1 and 0x21, OFF is same bytes back order. Other signals what I riddle are from '^', 'v', '>>' and '<<' buttons hold and release. There is two more signals, one when HU doesn't like communication - I called "Cancel", and one more, what HU sends it from time to time instead of OFF.
+The HU sends I2C/TWI signals to AI on 960 Hz (or sort of) to the address 0x40. ON is two bytes 0xA1 and 0x21, OFF is same bytes back order. Other signals what I riddle are from '^', 'v', '>>' and '<<' buttons hold and release. There are two more signals, one when HU doesn't like communication - I called "Cancel", and one more, what HU sends it from time to time instead of OFF.
 
 #### OFF
 
