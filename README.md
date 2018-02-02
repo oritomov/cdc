@@ -23,14 +23,15 @@ Audi Gamma CC Bose (HU) is my auto cassette player. It has ability to rule a CD 
 
 ### I2C/TWI communication betwwen HU and AI
 
-Even though communication with VAG's CD Changers is pretty well documented, I couldn't find any information about communication between my HU and the AI. I found out how the HU communicate to the AI, but I have not idea what the AI should reply.
+Even though communication with VAG's CD Changers is pretty well documented, I couldn't find any information about communication between my HU and the AI. This is what I surveyed.
 
-The HU sends I2C/TWI signals to AI on 950 Hz (or sort of) to the address 0x40. ON is two bytes 0xA1 and 0x21, OFF is same bytes back order. Other signals what I riddle are from buttons '^', 'v', '>>' and '<<'. There is two more signals, one when HU doesn't like communication - I called "Cancel", and one more, but I have no idea when and why HU sends it.
+The HU sends I2C/TWI signals to AI on 960 Hz (or sort of) to the address 0x40. ON is two bytes 0xA1 and 0x21, OFF is same bytes back order. Other signals what I riddle are from '^', 'v', '>>' and '<<' buttons hold and release. There is two more signals, one when HU doesn't like communication - I called "Cancel", and one more, what HU sends it from time to time instead of OFF.
 
 #### OFF
 
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/off.png)
 
+ * (Start)
  * 1000000 (7bit addrtess 0x40)
  * 0 (Write)
  * 0 (Ack)
@@ -44,6 +45,7 @@ The HU sends I2C/TWI signals to AI on 950 Hz (or sort of) to the address 0x40. O
  
 ![](https://github.com/oritomov/cdc/blob/master/etc/img/on.png)
 
+ * (Start)
  * 1000000 (7bit addrtess 0x40)
  * 0 (Write)
  * 0 (Ack)
@@ -52,8 +54,40 @@ The HU sends I2C/TWI signals to AI on 950 Hz (or sort of) to the address 0x40. O
  * 00100001 (8bit data 0x21)
  * 0 (Ack)
  * (Stop)
+
+#### Display
+
+Communication on the other direction is pretty ... incoherent. It looks like address and 3 bytes via I2C, but it is not. And there is no Ack signal in response. It should be around 30 ms after HU signal and after direction button release it repeats twice. And ditto any time when on display should appears something new. 
+
+In order to display CD01TR01 it will looks like:
+
+![](https://github.com/oritomov/cdc/blob/master/etc/img/gamma.png)
+
+Down side I colored what it would look like if it was I2C. But it is:
+
+ * (Start)
+ * 1000000 (7bit address 0x40, same as I2C)
+ * 01 (2 bits, similar to I2C Write & Ack, but there is no Ack level from the HU
  
-NOTE: I will be very appreciate if some kind person records the communication and sends it to me. This will be great help in order my emulator to shows played track and album number. At the moment it works without this.
+------------------------------ 1st data chunk
+ 
+ * 000 (3 bits, not used)
+ * X (one bit, 1 means NO DISK)
+ * 0 (1 bit, not used)
+ * 0001 (4 bits, CD #)
+ 
+------------------------------ 2nd data chunk
+ 
+ * 0 (1 bit, not used)
+ * 00000001 (8bit data TR #)
+ 
+------------------------------ 3rd data chunk
+ 
+ * 0 (1 bit, not used)
+ * 0000011 (8bit data CRC value)
+ * (Stop)
+
+Check sum is CD + TR + 1, sometimes minus 0x10 in order not to overflow 0xFF.
 
 ### Emulator
 
