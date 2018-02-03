@@ -36,6 +36,9 @@
 // or
 #define HU_CANCEL         (uint16_t)0x22A2
 
+#define HU_LEFT_RIGHT     (uint16_t)0x0102
+#define HU_RIGHT_LEFT     (uint16_t)0x0201
+
 #define HU_STATUS         (uint8_t)0x34
 
 // NOTE! Those are two made up commands in order to change the CDs
@@ -212,24 +215,36 @@ void receiveEvent(int howMany) {
           cdc_command = HU_STOP;
           break;
         case HU_LEFT_HOLD:
-          Serial.write(CDC_PREV);
+          cdc_command = HU_LEFT_HOLD;
           break;
         case HU_LEFT_RELEASE:
+          if (cdc_command == HU_LEFT_HOLD) {
+            Serial.write(CDC_PREV);
+          } else {
+            Serial.write(CDC_SHFFL);
+          }
+          cdc_command = 0;
           break;
         case HU_RIGHT_HOLD:
-          Serial.write(CDC_NEXT);
+          cdc_command = HU_RIGHT_HOLD;
           break;
         case HU_RIGHT_RELEASE:
+          if (cdc_command == HU_RIGHT_HOLD) {
+            Serial.write(CDC_NEXT);
+          } else {
+            Serial.write(CDC_SEQNT);
+          }
+          cdc_command = 0;
           break;
         case HU_DOWN_HOLD:
-          Serial.write(CDC_NEXT_CD);
           break;
         case HU_DOWN_RELEASE:
+          Serial.write(CDC_NEXT_CD);
           break;
         case HU_UP_HOLD:
-          Serial.write(CDC_PREV_CD);
           break;
         case HU_UP_RELEASE:
+          Serial.write(CDC_PREV_CD);
           break;
         case HU_NO_IDEA:
           Serial.print("no idea "); //unknow
