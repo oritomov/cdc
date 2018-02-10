@@ -71,9 +71,10 @@ Down side I colored what it would look like if it was I2C. But it is:
  
 ------------------------------ 1st data chunk
  
- * 000 (3 bits, not used)
- * X (one bit, 1 means NO DISK)
  * 0 (1 bit, not used)
+ * 00 (2 bits, ???)
+ * 0 (1 bit, 1 means NO DISK)
+ * 0 (1 bit, ???)
  * 0001 (4 bits, CD #)
  
 ------------------------------ 2nd data chunk
