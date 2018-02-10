@@ -53,6 +53,7 @@
 
 int hu_handshaked;
 int started;
+uint32_t previousMillis;
 uint16_t cdc_command;
 uint8_t cdc_cd;
 uint8_t cdc_tr;
@@ -116,13 +117,11 @@ void wire() {
 void hu_handshake() {
   // when started but not handshaked
   if (cdc_status()) {
-    hu_handshaked = true;
     gamma();
   } else {
     // wait for a while
     //delay(3000);
     uint32_t currentMillis = millis();
-    static uint32_t previousMillis;
     if (currentMillis - previousMillis >= 3000) {
       previousMillis = currentMillis;
       // trying again
@@ -138,6 +137,7 @@ void hu_handshake() {
 int cdc_status() {
   static uint8_t status = HU_STATUS_HEAD;
   if (Serial.available() > 0) {
+    hu_handshaked = true;
     digitalWrite(ledPin, HIGH);     // turn on the LED:
     // read the incoming byte:
     uint8_t incomingByte = Serial.read();
@@ -208,6 +208,7 @@ void receiveEvent(int howMany) {
           Serial.write(CDC_END_CMD);
           // response
           cdc_command = HU_START;
+          previousMillis = millis();
           break;
         case HU_STOP:
           Serial.write(CDC_STOP);
