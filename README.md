@@ -85,7 +85,7 @@ Down side I colored what it would look like if it was I2C. But it is:
 ------------------------------ 3rd data chunk
  
  * 0 (1 bit, not used)
- * 0000011 (8bit data CRC value)
+ * 00000011 (8bit data CRC value)
  * (Stop)
 
 Check sum is CD + TR + 1, sometimes minus 0x10 in order not to overflow 0xFF.
