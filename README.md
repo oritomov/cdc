@@ -90,6 +90,8 @@ Down side I colored what it would look like if it was I2C. But it is:
 
 Check sum is CD + TR + 1, sometimes minus 0x10 in order not to overflow 0xFF.
 
+![](https://github.com/oritomov/cdc/blob/master/etc/img/cd01tr01.JPG)
+
 ### Emulator
 
 I implemented the emulator from Arduino to replace the AI and Raspberry Pi to replace the CD Changer. I use separate DAC because that build in RPi is ... not good enough.
